@@ -17,7 +17,8 @@ const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
 
 export default buildConfig({
-  cors: [],
+  cors: [process.env.NEXT_PUBLIC_SERVER_URL || ''].filter(Boolean),
+  csrf: [process.env.NEXT_PUBLIC_SERVER_URL || ''].filter(Boolean),
   admin: {
     user: Users.slug,
     importMap: {
@@ -33,7 +34,7 @@ export default buildConfig({
   db: postgresAdapter({
     pool: {
       connectionString: process.env.DATABASE_URI || '',
-      ssl: { rejectUnauthorized: false },
+      ssl: process.env.NODE_ENV === 'production' ? { rejectUnauthorized: false } : false,
     },
   }),
   sharp,
