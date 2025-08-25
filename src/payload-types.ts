@@ -68,7 +68,9 @@ export interface Config {
   blocks: {};
   collections: {
     users: User;
+    AgencyBase: AgencyBase;
     media: Media;
+    counters: Counter;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
     'payload-migrations': PayloadMigration;
@@ -76,13 +78,15 @@ export interface Config {
   collectionsJoins: {};
   collectionsSelect: {
     users: UsersSelect<false> | UsersSelect<true>;
+    AgencyBase: AgencyBaseSelect<false> | AgencyBaseSelect<true>;
     media: MediaSelect<false> | MediaSelect<true>;
+    counters: CountersSelect<false> | CountersSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
     'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
     'payload-migrations': PayloadMigrationsSelect<false> | PayloadMigrationsSelect<true>;
   };
   db: {
-    defaultIDType: string;
+    defaultIDType: number;
   };
   globals: {};
   globalsSelect: {};
@@ -118,7 +122,7 @@ export interface UserAuthOperations {
  * via the `definition` "users".
  */
 export interface User {
-  id: string;
+  id: number;
   updatedAt: string;
   createdAt: string;
   email: string;
@@ -139,10 +143,53 @@ export interface User {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "AgencyBase".
+ */
+export interface AgencyBase {
+  id: number;
+  displayId: number;
+  fullname: string;
+  nickname: string;
+  followers: number;
+  countryFlags:
+    | '/flags/us.svg'
+    | '/flags/gb.svg'
+    | '/flags/ca.svg'
+    | '/flags/au.svg'
+    | '/flags/de.svg'
+    | '/flags/fr.svg'
+    | '/flags/it.svg'
+    | '/flags/es.svg'
+    | '/flags/br.svg'
+    | '/flags/ru.svg'
+    | '/flags/cn.svg'
+    | '/flags/jp.svg'
+    | '/flags/kr.svg'
+    | '/flags/in.svg'
+    | '/flags/ua.svg'
+    | '/flags/pl.svg'
+    | '/flags/pt.svg'
+    | '/flags/gr.svg';
+  socialMediaIcons: (
+    | '/socials/icons8-instagram.gif'
+    | '/socials/icons8-facebook.gif'
+    | '/socials/icons8-youtube.gif'
+    | '/socials/icons8-twitch.gif'
+    | '/socials/icons8-tiktok.gif'
+    | '/socials/kick.png'
+    | '/socials/icons8-trovo-logo.svg'
+  )[];
+  country: string;
+  avatar?: (number | null) | Media;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "media".
  */
 export interface Media {
-  id: string;
+  id: number;
   alt: string;
   updatedAt: string;
   createdAt: string;
@@ -155,26 +202,55 @@ export interface Media {
   height?: number | null;
   focalX?: number | null;
   focalY?: number | null;
+  sizes?: {
+    avatar?: {
+      url?: string | null;
+      width?: number | null;
+      height?: number | null;
+      mimeType?: string | null;
+      filesize?: number | null;
+      filename?: string | null;
+    };
+  };
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "counters".
+ */
+export interface Counter {
+  id: number;
+  name: string;
+  value: number;
+  updatedAt: string;
+  createdAt: string;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "payload-locked-documents".
  */
 export interface PayloadLockedDocument {
-  id: string;
+  id: number;
   document?:
     | ({
         relationTo: 'users';
-        value: string | User;
+        value: number | User;
+      } | null)
+    | ({
+        relationTo: 'AgencyBase';
+        value: number | AgencyBase;
       } | null)
     | ({
         relationTo: 'media';
-        value: string | Media;
+        value: number | Media;
+      } | null)
+    | ({
+        relationTo: 'counters';
+        value: number | Counter;
       } | null);
   globalSlug?: string | null;
   user: {
     relationTo: 'users';
-    value: string | User;
+    value: number | User;
   };
   updatedAt: string;
   createdAt: string;
@@ -184,10 +260,10 @@ export interface PayloadLockedDocument {
  * via the `definition` "payload-preferences".
  */
 export interface PayloadPreference {
-  id: string;
+  id: number;
   user: {
     relationTo: 'users';
-    value: string | User;
+    value: number | User;
   };
   key?: string | null;
   value?:
@@ -207,7 +283,7 @@ export interface PayloadPreference {
  * via the `definition` "payload-migrations".
  */
 export interface PayloadMigration {
-  id: string;
+  id: number;
   name?: string | null;
   batch?: number | null;
   updatedAt: string;
@@ -237,6 +313,22 @@ export interface UsersSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "AgencyBase_select".
+ */
+export interface AgencyBaseSelect<T extends boolean = true> {
+  displayId?: T;
+  fullname?: T;
+  nickname?: T;
+  followers?: T;
+  countryFlags?: T;
+  socialMediaIcons?: T;
+  country?: T;
+  avatar?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "media_select".
  */
 export interface MediaSelect<T extends boolean = true> {
@@ -252,6 +344,30 @@ export interface MediaSelect<T extends boolean = true> {
   height?: T;
   focalX?: T;
   focalY?: T;
+  sizes?:
+    | T
+    | {
+        avatar?:
+          | T
+          | {
+              url?: T;
+              width?: T;
+              height?: T;
+              mimeType?: T;
+              filesize?: T;
+              filename?: T;
+            };
+      };
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "counters_select".
+ */
+export interface CountersSelect<T extends boolean = true> {
+  name?: T;
+  value?: T;
+  updatedAt?: T;
+  createdAt?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema

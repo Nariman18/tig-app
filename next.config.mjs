@@ -12,6 +12,15 @@ const nextConfig = {
 
     return webpackConfig
   },
+
+  images: {
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'https://s3.eu-central-003.backblazeb2.com',
+      },
+    ],
+  },
 }
 
 export default withPayload(nextConfig, { devBundleServerPackages: false })
