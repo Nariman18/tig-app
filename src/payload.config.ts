@@ -22,6 +22,13 @@ if (process.env.PAYLOAD_PUBLIC_SERVER_URL) {
   origins.push(process.env.PAYLOAD_PUBLIC_SERVER_URL)
 }
 
+if (!process.env.DATABASE_URI) {
+  throw new Error('DATABASE_URI is not defined!')
+}
+if (!process.env.PAYLOAD_SECRET) {
+  throw new Error('PAYLOAD_SECRET is not defined!')
+}
+
 export default buildConfig({
   serverURL: process.env.PAYLOAD_PUBLIC_SERVER_URL || 'http://localhost:3000',
   cors: origins,
@@ -34,13 +41,13 @@ export default buildConfig({
   },
   collections: [Users, AgencyBase, Media, Counters],
   editor: lexicalEditor(),
-  secret: process.env.PAYLOAD_SECRET || '',
+  secret: process.env.PAYLOAD_SECRET!,
   typescript: {
     outputFile: path.resolve(dirname, 'payload-types.ts'),
   },
   db: postgresAdapter({
     pool: {
-      connectionString: process.env.DATABASE_URI || '',
+      connectionString: process.env.DATABASE_URI!,
       ssl: {
         rejectUnauthorized: false,
       },
