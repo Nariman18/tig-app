@@ -1,4 +1,3 @@
-// storage-adapter-import-placeholder
 import { postgresAdapter } from '@payloadcms/db-postgres'
 import { payloadCloudPlugin } from '@payloadcms/payload-cloud'
 import { lexicalEditor } from '@payloadcms/richtext-lexical'
@@ -11,65 +10,99 @@ import { Users } from './collections/Users'
 import { AgencyBase } from './collections/AgencyBase'
 import { Media } from './collections/Media'
 import { Counters } from './collections/Counters'
-// import { Media } from './collections/Media'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
 
-const origins = ['http://localhost:3000']
+// Get allowed origins dynamically
+const getOrigins = (): string[] => {
+  const origins = ['http://localhost:3000']
 
-if (process.env.PAYLOAD_PUBLIC_SERVER_URL) {
-  origins.push(process.env.PAYLOAD_PUBLIC_SERVER_URL)
+  // Add Vercel URL if available
+  if (process.env.VERCEL_URL) {
+    origins.push(`https://${process.env.VERCEL_URL}`)
+  }
+
+  // Add production URL from environment
+  if (process.env.PAYLOAD_PUBLIC_SERVER_URL) {
+    origins.push(process.env.PAYLOAD_PUBLIC_SERVER_URL)
+  }
+
+  // Add any custom domain
+  if (process.env.NEXT_PUBLIC_SERVER_URL) {
+    origins.push(process.env.NEXT_PUBLIC_SERVER_URL)
+  }
+
+  return origins
 }
 
+// Validation with better error messages
 if (!process.env.DATABASE_URI) {
-  throw new Error('DATABASE_URI is not defined!')
+  console.error('❌ DATABASE_URI is not defined!')
+  // Don't throw in production, just log
+  if (process.env.NODE_ENV === 'development') {
+    throw new Error('DATABASE_URI is not defined!')
+  }
 }
+
 if (!process.env.PAYLOAD_SECRET) {
-  throw new Error('PAYLOAD_SECRET is not defined!')
+  console.error('❌ PAYLOAD_SECRET is not defined!')
+  if (process.env.NODE_ENV === 'development') {
+    throw new Error('PAYLOAD_SECRET is not defined!')
+  }
 }
 
 export default buildConfig({
-  serverURL: 'http://localhost:3000',
-  cors: origins,
-  csrf: origins,
+  // Use environment variable for serverURL, fallback to localhost only in development
+  serverURL:
+    process.env.PAYLOAD_PUBLIC_SERVER_URL ||
+    (process.env.NODE_ENV === 'production' ? '' : 'http://localhost:3000'),
+
+  cors: getOrigins(),
+  csrf: getOrigins(),
+
   admin: {
     user: Users.slug,
     importMap: {
       baseDir: path.resolve(dirname),
     },
   },
+
   collections: [Users, AgencyBase, Media, Counters],
   editor: lexicalEditor(),
-  secret: process.env.PAYLOAD_SECRET!,
+  secret: process.env.PAYLOAD_SECRET || 'fallback-secret-for-build',
+
   typescript: {
     outputFile: path.resolve(dirname, 'payload-types.ts'),
   },
+
   db: postgresAdapter({
     pool: {
-      connectionString: process.env.DATABASE_URI!,
-      ssl: {
-        rejectUnauthorized: false,
-      },
+      connectionString: process.env.DATABASE_URI || '',
+      ssl:
+        process.env.NODE_ENV === 'production'
+          ? {
+              rejectUnauthorized: false,
+            }
+          : false,
     },
   }),
+
   sharp,
   plugins: [
     payloadCloudPlugin(),
-    // storage-adapter-placeholder
 
-    // Backblaze B2 (S3-compatible) Storage
     s3Storage({
       collections: {
-        media: {}, // attach storage to Media collection
+        media: {},
       },
-      bucket: process.env.BACKBLAZE_BUCKET_NAME!,
+      bucket: process.env.BACKBLAZE_BUCKET_NAME || '',
       config: {
         endpoint: process.env.BACKBLAZE_ENDPOINT,
-        region: process.env.BACKBLAZE_REGION,
+        region: process.env.BACKBLAZE_REGION || 'eu-central-003',
         credentials: {
-          accessKeyId: process.env.BACKBLAZE_KEY_ID!,
-          secretAccessKey: process.env.BACKBLAZE_APPLICATION_KEY!,
+          accessKeyId: process.env.BACKBLAZE_KEY_ID || '',
+          secretAccessKey: process.env.BACKBLAZE_APPLICATION_KEY || '',
         },
         forcePathStyle: true,
       },

@@ -1,14 +1,32 @@
+// app/api/test-db/route.ts
 import { NextResponse } from 'next/server'
-import { Pool } from 'pg'
+import { getPayload } from 'payload'
+import config from '@payload-config'
 
 export async function GET() {
-  const pool = new Pool({ connectionString: process.env.DATABASE_URI })
-  console.log('Using DB URI:', process.env.DATABASE_URI)
-
   try {
-    const result = await pool.query('SELECT NOW()')
-    return NextResponse.json({ success: true, time: result.rows[0].now })
+    const payload = await getPayload({ config })
+
+    // Test a simple query
+    const result = await payload.find({
+      collection: 'AgencyBase',
+      limit: 1,
+    })
+
+    return NextResponse.json({
+      success: true,
+      message: 'Database connection successful',
+      count: result.totalDocs,
+    })
   } catch (error: any) {
-    return NextResponse.json({ success: false, error: error.message })
+    console.error('Database test error:', error)
+    return NextResponse.json(
+      {
+        success: false,
+        error: error.message,
+        details: 'Check DATABASE_URI and SSL configuration',
+      },
+      { status: 500 },
+    )
   }
 }
