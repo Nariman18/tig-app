@@ -16,8 +16,16 @@ import { Counters } from './collections/Counters'
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
 
+const origins = ['http://localhost:3000']
+
+if (process.env.PAYLOAD_PUBLIC_SERVER_URL) {
+  origins.push(process.env.PAYLOAD_PUBLIC_SERVER_URL)
+}
+
 export default buildConfig({
   serverURL: process.env.PAYLOAD_PUBLIC_SERVER_URL || 'http://localhost:3000',
+  cors: origins,
+  csrf: origins,
   admin: {
     user: Users.slug,
     importMap: {
@@ -25,8 +33,6 @@ export default buildConfig({
     },
   },
   collections: [Users, AgencyBase, Media, Counters],
-  cors: ['http://localhost:3000', process.env.PAYLOAD_PUBLIC_SERVER_URL || ''],
-  csrf: ['http://localhost:3000', process.env.PAYLOAD_PUBLIC_SERVER_URL || ''],
   editor: lexicalEditor(),
   secret: process.env.PAYLOAD_SECRET || '',
   typescript: {
