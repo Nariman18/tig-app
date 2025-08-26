@@ -21,7 +21,12 @@ const nextConfig = {
       },
       {
         protocol: 'https',
-        hostname: 'tig-app-seven.vercel.app',
+        hostname: '',
+        pathname: '/**',
+      },
+      {
+        protocol: 'http',
+        hostname: 'localhost',
         pathname: '/**',
       },
     ],

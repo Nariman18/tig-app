@@ -17,9 +17,7 @@ const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
 
 export default buildConfig({
-  serverURL: process.env.SERVER_URL || 'http://localhost:3000',
-  cors: ['http://localhost:3000', 'https://tig-app-seven.vercel.app'],
-  csrf: ['http://localhost:3000', 'https://tig-app-seven.vercel.app'],
+  serverURL: process.env.PAYLOAD_PUBLIC_SERVER_URL || 'http://localhost:3000',
   admin: {
     user: Users.slug,
     importMap: {
@@ -27,6 +25,8 @@ export default buildConfig({
     },
   },
   collections: [Users, AgencyBase, Media, Counters],
+  cors: ['http://localhost:3000', process.env.PAYLOAD_PUBLIC_SERVER_URL || ''],
+  csrf: ['http://localhost:3000', process.env.PAYLOAD_PUBLIC_SERVER_URL || ''],
   editor: lexicalEditor(),
   secret: process.env.PAYLOAD_SECRET || '',
   typescript: {
