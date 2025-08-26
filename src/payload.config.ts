@@ -14,49 +14,31 @@ import { Counters } from './collections/Counters'
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
 
-// Get allowed origins dynamically
 const getOrigins = (): string[] => {
   const origins = ['http://localhost:3000']
 
-  // Add Vercel URL if available
-  if (process.env.VERCEL_URL) {
-    origins.push(`https://${process.env.VERCEL_URL}`)
-  }
-
-  // Add production URL from environment
   if (process.env.PAYLOAD_PUBLIC_SERVER_URL) {
     origins.push(process.env.PAYLOAD_PUBLIC_SERVER_URL)
   }
 
-  // Add any custom domain
-  if (process.env.NEXT_PUBLIC_SERVER_URL) {
-    origins.push(process.env.NEXT_PUBLIC_SERVER_URL)
+  if (process.env.VERCEL_URL) {
+    origins.push(`https://${process.env.NEXT_PUBLIC_SERVER_URL}`)
   }
 
-  return origins
+  return Array.from(new Set(origins.filter(Boolean)))
 }
 
-// Validation with better error messages
-if (!process.env.DATABASE_URI) {
-  console.error('❌ DATABASE_URI is not defined!')
-  // Don't throw in production, just log
-  if (process.env.NODE_ENV === 'development') {
-    throw new Error('DATABASE_URI is not defined!')
+if (process.env.NODE_ENV === 'development') {
+  if (!process.env.DATABASE_URI) {
+    console.warn('⚠️ DATABASE_URI is not defined in development!')
   }
-}
-
-if (!process.env.PAYLOAD_SECRET) {
-  console.error('❌ PAYLOAD_SECRET is not defined!')
-  if (process.env.NODE_ENV === 'development') {
-    throw new Error('PAYLOAD_SECRET is not defined!')
+  if (!process.env.PAYLOAD_SECRET) {
+    console.warn('⚠️ PAYLOAD_SECRET is not defined in development!')
   }
 }
 
 export default buildConfig({
-  // Use environment variable for serverURL, fallback to localhost only in development
-  serverURL:
-    process.env.PAYLOAD_PUBLIC_SERVER_URL ||
-    (process.env.NODE_ENV === 'production' ? '' : 'http://localhost:3000'),
+  serverURL: process.env.PAYLOAD_PUBLIC_SERVER_URL || 'http://localhost:3000',
 
   cors: getOrigins(),
   csrf: getOrigins(),
@@ -70,7 +52,8 @@ export default buildConfig({
 
   collections: [Users, AgencyBase, Media, Counters],
   editor: lexicalEditor(),
-  secret: process.env.PAYLOAD_SECRET || 'fallback-secret-for-build',
+
+  secret: process.env.PAYLOAD_SECRET || (process.env.NODE_ENV === 'production' ? '' : 'dev-secret'),
 
   typescript: {
     outputFile: path.resolve(dirname, 'payload-types.ts'),
@@ -79,6 +62,7 @@ export default buildConfig({
   db: postgresAdapter({
     pool: {
       connectionString: process.env.DATABASE_URI || '',
+
       ssl:
         process.env.NODE_ENV === 'production'
           ? {
@@ -96,13 +80,13 @@ export default buildConfig({
       collections: {
         media: {},
       },
-      bucket: process.env.BACKBLAZE_BUCKET_NAME || '',
+      bucket: process.env.BACKBLAZE_BUCKET_NAME!,
       config: {
-        endpoint: process.env.BACKBLAZE_ENDPOINT,
-        region: process.env.BACKBLAZE_REGION || 'eu-central-003',
+        endpoint: process.env.BACKBLAZE_ENDPOINT!,
+        region: process.env.BACKBLAZE_REGION!,
         credentials: {
-          accessKeyId: process.env.BACKBLAZE_KEY_ID || '',
-          secretAccessKey: process.env.BACKBLAZE_APPLICATION_KEY || '',
+          accessKeyId: process.env.BACKBLAZE_KEY_ID!,
+          secretAccessKey: process.env.BACKBLAZE_APPLICATION_KEY!,
         },
         forcePathStyle: true,
       },
