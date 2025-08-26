@@ -30,7 +30,7 @@ if (!process.env.PAYLOAD_SECRET) {
 }
 
 export default buildConfig({
-  serverURL: process.env.PAYLOAD_PUBLIC_SERVER_URL || 'http://localhost:3000',
+  serverURL: 'http://localhost:3000',
   cors: origins,
   csrf: origins,
   admin: {
@@ -59,5 +59,20 @@ export default buildConfig({
     // storage-adapter-placeholder
 
     // Backblaze B2 (S3-compatible) Storage
+    s3Storage({
+      collections: {
+        media: {}, // attach storage to Media collection
+      },
+      bucket: process.env.BACKBLAZE_BUCKET_NAME!,
+      config: {
+        endpoint: process.env.BACKBLAZE_ENDPOINT,
+        region: process.env.BACKBLAZE_REGION,
+        credentials: {
+          accessKeyId: process.env.BACKBLAZE_KEY_ID!,
+          secretAccessKey: process.env.BACKBLAZE_APPLICATION_KEY!,
+        },
+        forcePathStyle: true,
+      },
+    }),
   ],
 })
