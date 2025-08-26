@@ -17,6 +17,7 @@ const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
 
 export default buildConfig({
+  serverURL: process.env.SERVER_URL || 'http://localhost:3000',
   cors: ['http://localhost:3000', 'https://tig-app-seven.vercel.app'],
   csrf: ['http://localhost:3000', 'https://tig-app-seven.vercel.app'],
   admin: {

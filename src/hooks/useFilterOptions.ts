@@ -26,8 +26,8 @@ export function useFilterOptions() {
       try {
         setIsLoading(true)
         setError(null)
-        const API_BASE = process.env.NEXT_PUBLIC_API_BASE_URL || 'http://localhost:3000'
-        const response = await fetch(`${API_BASE}/api/agency-base/filter-options`)
+
+        const response = await fetch('/api/agency-base/filter-options')
 
         if (!response.ok) {
           throw new Error('Failed to fetch filter options')
