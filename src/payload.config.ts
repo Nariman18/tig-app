@@ -17,8 +17,8 @@ const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
 
 export default buildConfig({
-  cors: [process.env.NEXT_PUBLIC_SERVER_URL || ''].filter(Boolean),
-  csrf: [process.env.NEXT_PUBLIC_SERVER_URL || ''].filter(Boolean),
+  cors: [process.env.NEXT_PUBLIC_SERVER_URL || '', 'http://localhost:3000'].filter(Boolean),
+  csrf: [process.env.NEXT_PUBLIC_SERVER_URL || '', 'http://localhost:3000'].filter(Boolean),
   admin: {
     user: Users.slug,
     importMap: {

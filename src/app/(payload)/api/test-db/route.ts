@@ -3,6 +3,7 @@ import { Pool } from 'pg'
 
 export async function GET() {
   const pool = new Pool({ connectionString: process.env.DATABASE_URI })
+  console.log('Using DB URI:', process.env.DATABASE_URI)
 
   try {
     const result = await pool.query('SELECT NOW()')

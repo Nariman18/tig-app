@@ -86,7 +86,7 @@ export function FilteringPanel({
       </Popover>
 
       {currentFilter && (
-        <Button variant="ghost" size="sm" onClick={clearFilter} className="h-8 px-2">
+        <Button variant="ghost" size="lg" onClick={clearFilter} className="h-8 px-2">
           ×
         </Button>
       )}

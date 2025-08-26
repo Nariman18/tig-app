@@ -105,7 +105,7 @@ function AgencyTable() {
                   onFilterChange={handleFollowerFilterChange}
                   currentMin={minFollowers}
                   currentMax={maxFollowers}
-                  className="min-w-[280px]"
+                  className=""
                 />
               </div>
             </div>
@@ -177,6 +177,7 @@ function AgencyTable() {
                                   alt={agency.imageAlt || 'avatar'}
                                   fill
                                   className="object-cover rounded-full"
+                                  priority
                                 />
                               ) : (
                                 <div className="w-full h-full rounded bg-gray-200 flex items-center justify-center">
@@ -203,6 +204,7 @@ function AgencyTable() {
                                   alt={`${agency.country} flag`}
                                   fill
                                   className="object-contain"
+                                  priority
                                 />
                               </div>
                             )}
@@ -238,6 +240,7 @@ function AgencyTable() {
                                           alt={`Social media icon ${index + 1}`}
                                           fill
                                           className="object-contain"
+                                          priority
                                           onError={(e) => {
                                             e.currentTarget.style.display = 'none'
                                           }}
