@@ -2,7 +2,7 @@
 import Image from 'next/image'
 import { FilteringPanel } from './filtering-panel'
 import { useFetchAgencies } from '@/hooks/useFetchAgencies'
-import { useMemo, useState } from 'react'
+import { useState } from 'react'
 import React from 'react'
 import { useFilterOptions } from '@/hooks/useFilterOptions'
 import Pagination from './pagination'

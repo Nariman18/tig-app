@@ -108,6 +108,5 @@ export function useFetchAgencies({
     isLoading,
     error,
     pagination,
-    setPage: (newPage: number) => {}, // For implementing page setter if needed
   }
 }
