@@ -49,8 +49,8 @@ function Header() {
       }}
       className="absolute 
         top-0 left-1/2 -translate-x-1/2
-        xl:w-[calc(100%-2rem)] lg:w-[calc(100%-4rem)] ipad-pro-portrait:w-[calc(100%-4rem)] ipad-pro-landscape:w-[calc(100%-5rem)] md:w-[calc(100%-3rem)] w-[calc(100%-1.6rem)]
-        max-w-[89rem]       
+        2xl:w-[calc(100%-6rem)] xl:w-[calc(100%-2rem)] lg:w-[calc(100%-4rem)] ipad-pro-portrait:w-[calc(100%-4rem)] ipad-pro-landscape:w-[calc(100%-4.5rem)] md:w-[calc(100%-3rem)] w-[calc(100%-1.6rem)]
+        max-w-full        
         rounded-xl border border-gray-600 
         z-10 shadow-[0_5px_30px_#e4cba1] dark:shadow-[0_5px_30px_#00bbf0] 
         bg-[#ffff] dark:bg-[#000006]
