@@ -52,17 +52,27 @@ export async function GET() {
       }
     })
 
-    return NextResponse.json({
-      countries: Array.from(countriesSet)
-        .sort()
-        .map((country) => ({ value: country, label: country })),
-      socialMedias: Array.from(socialPlatforms)
-        .sort()
-        .map((platform) => ({
-          value: platform.toLowerCase(),
-          label: platform,
-        })),
-    })
+    return NextResponse.json(
+      {
+        countries: Array.from(countriesSet)
+          .sort()
+          .map((country) => ({ value: country, label: country })),
+        socialMedias: Array.from(socialPlatforms)
+          .sort()
+          .map((platform) => ({
+            value: platform.toLowerCase(),
+            label: platform,
+          })),
+      },
+      {
+        status: 200,
+        headers: {
+          'Access-Control-Allow-Origin': '*',
+          'Access-Control-Allow-Methods': 'GET, OPTIONS',
+          'Access-Control-Allow-Headers': 'Content-Type',
+        },
+      },
+    )
   } catch (err) {
     console.error('Payload fetch error:', err)
     return NextResponse.json({ error: 'Failed to fetch filter options' }, { status: 500 })

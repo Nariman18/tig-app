@@ -109,21 +109,31 @@ export async function GET(request: Request) {
       }
     })
 
-    return NextResponse.json({
-      docs,
-      totalPages: result.totalPages,
-      totalDocs: result.totalDocs,
-      currentPage: page,
-      hasNextPage: page < result.totalPages,
-      hasPrevPage: page > 1,
-      noResultsWithFilters: noResultsWithFilters,
-      appliedFilters: {
-        countryFilter,
-        socialMediaFilter,
-        minFollowers,
-        maxFollowers,
+    return NextResponse.json(
+      {
+        docs,
+        totalPages: result.totalPages,
+        totalDocs: result.totalDocs,
+        currentPage: page,
+        hasNextPage: page < result.totalPages,
+        hasPrevPage: page > 1,
+        noResultsWithFilters: noResultsWithFilters,
+        appliedFilters: {
+          countryFilter,
+          socialMediaFilter,
+          minFollowers,
+          maxFollowers,
+        },
       },
-    })
+      {
+        status: 200,
+        headers: {
+          'Access-Control-Allow-Origin': '*',
+          'Access-Control-Allow-Methods': 'GET, OPTIONS',
+          'Access-Control-Allow-Headers': 'Content-Type',
+        },
+      },
+    )
   } catch (err) {
     console.error('Payload fetch error:', err)
     return NextResponse.json({ error: 'Failed to fetch data' }, { status: 500 })
