@@ -4,8 +4,9 @@ import { ThemeProvider } from '@/components/ThemeProvider'
 import Header from '@/components/header'
 
 export const metadata = {
-  description: 'A blank template using Payload in a Next.js app.',
-  title: 'Payload Blank Template',
+  description:
+    'A marketing agency that connects brands with the right influencers to create meaningful and effective campaigns. With over 50 ad integrations every day, we combine smart targeting, creative ideas, and smooth execution to boost brand visibility and engagement.',
+  title: 'Trend Influence Group',
 }
 
 export default async function RootLayout(props: { children: React.ReactNode }) {
