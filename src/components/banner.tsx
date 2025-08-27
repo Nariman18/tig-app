@@ -8,7 +8,7 @@ function Banner() {
       <div className="relative w-full h-[50vw] dark:shadow-[0px_22px_40px_-20px_#00bbf0] shadow-[0_5px_40px_#e4cba1] hidden md:block">
         {/* Dark mode desktop image */}
         <Image
-          src="/IMG_5947.png"
+          src="/IMG_5947.PNG"
           alt="banner"
           fill
           className="object-cover dark:block hidden"
@@ -29,7 +29,7 @@ function Banner() {
       <div className="relative w-full h-[100vw] md:hidden">
         {/* Dark mode mobile image */}
         <Image
-          src="/IMG_2714.png"
+          src="/IMG_2714.PNG"
           alt="banner"
           fill
           className="object-cover dark:block hidden"
