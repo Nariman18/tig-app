@@ -8,18 +8,7 @@ import { useFilterOptions } from '@/hooks/useFilterOptions'
 import Pagination from './pagination'
 import { SliderFilter } from './slider-filter'
 
-interface AgencyTableProps {
-  initialData?: {
-    docs: Agency[]
-    totalPages: number
-    totalDocs: number
-    currentPage: number
-    hasNextPage: boolean
-    hasPrevPage: boolean
-  }
-}
-
-function AgencyTable({ initialData }: AgencyTableProps) {
+function AgencyTable() {
   const [currentPage, setCurrentPage] = useState(1)
   const [countryFilter, setCountryFilter] = useState('')
   const [socialMediaFilter, setSocialMediaFilter] = useState('')
@@ -37,7 +26,6 @@ function AgencyTable({ initialData }: AgencyTableProps) {
     socialMediaFilter: socialMediaFilter || undefined,
     minFollowers,
     maxFollowers,
-    initialData,
   })
 
   const handleFilterChange = (filterType: string, value: string) => {

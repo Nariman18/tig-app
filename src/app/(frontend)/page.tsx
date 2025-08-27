@@ -20,7 +20,7 @@ export default async function MainPage() {
       </section>
 
       <section>
-        <AgencyTable initialData={data} />
+        <AgencyTable />
       </section>
     </main>
   )
