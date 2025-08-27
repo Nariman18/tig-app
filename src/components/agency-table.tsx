@@ -1,12 +1,13 @@
 'use client'
 import Image from 'next/image'
 import { FilteringPanel } from './filtering-panel'
-import { Agency, useFetchAgencies } from '@/hooks/useFetchAgencies'
+import { useFetchAgencies } from '@/hooks/useFetchAgencies'
 import { useState } from 'react'
 import React from 'react'
 import { useFilterOptions } from '@/hooks/useFilterOptions'
 import Pagination from './pagination'
 import { SliderFilter } from './slider-filter'
+import LoadingSpinner from './loading-spinner'
 
 function AgencyTable() {
   const [currentPage, setCurrentPage] = useState(1)
@@ -69,7 +70,12 @@ function AgencyTable() {
     return count.toString()
   }
 
-  if (isLoading) return <div className="text-center py-10">Loading agencies...</div>
+  if (isLoading)
+    return (
+      <div className="py-20">
+        <LoadingSpinner />
+      </div>
+    )
   if (error)
     return (
       <div className="text-red-500 text-[20px] flex items-center justify-center py-10">
