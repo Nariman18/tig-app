@@ -1,7 +1,6 @@
 // app/api/agency-base/filter-options/route.ts
 import { NextResponse } from 'next/server'
-import payload, { getPayload } from 'payload'
-import { initPayloadServer } from '../../../payloadServer'
+import { getPayload } from 'payload'
 import config from '@payload-config'
 
 export async function GET() {

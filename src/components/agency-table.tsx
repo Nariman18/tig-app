@@ -1,14 +1,25 @@
 'use client'
 import Image from 'next/image'
 import { FilteringPanel } from './filtering-panel'
-import { useFetchAgencies } from '@/hooks/useFetchAgencies'
+import { Agency, useFetchAgencies } from '@/hooks/useFetchAgencies'
 import { useState } from 'react'
 import React from 'react'
 import { useFilterOptions } from '@/hooks/useFilterOptions'
 import Pagination from './pagination'
 import { SliderFilter } from './slider-filter'
 
-function AgencyTable() {
+interface AgencyTableProps {
+  initialData?: {
+    docs: Agency[]
+    totalPages: number
+    totalDocs: number
+    currentPage: number
+    hasNextPage: boolean
+    hasPrevPage: boolean
+  }
+}
+
+function AgencyTable({ initialData }: AgencyTableProps) {
   const [currentPage, setCurrentPage] = useState(1)
   const [countryFilter, setCountryFilter] = useState('')
   const [socialMediaFilter, setSocialMediaFilter] = useState('')
@@ -26,6 +37,7 @@ function AgencyTable() {
     socialMediaFilter: socialMediaFilter || undefined,
     minFollowers,
     maxFollowers,
+    initialData,
   })
 
   const handleFilterChange = (filterType: string, value: string) => {

@@ -41,6 +41,14 @@ interface UseFetchAgenciesProps {
   socialMediaFilter?: string
   minFollowers?: number
   maxFollowers?: number
+  initialData?: {
+    docs: Agency[]
+    totalPages: number
+    totalDocs: number
+    currentPage: number
+    hasNextPage: boolean
+    hasPrevPage: boolean
+  }
 }
 
 export function useFetchAgencies({
@@ -50,8 +58,9 @@ export function useFetchAgencies({
   socialMediaFilter,
   minFollowers,
   maxFollowers,
+  initialData,
 }: UseFetchAgenciesProps = {}) {
-  const [agencies, setAgencies] = useState<Agency[]>([])
+  const [agencies, setAgencies] = useState<Agency[]>(initialData?.docs || [])
   const [isLoading, setIsLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
   const [pagination, setPagination] = useState<PaginationInfo>({
@@ -65,6 +74,16 @@ export function useFetchAgencies({
   })
 
   useEffect(() => {
+    // Only fetching if we have filters or pagination changes, and no initial data
+    const shouldFetch =
+      countryFilter ||
+      socialMediaFilter ||
+      minFollowers !== undefined ||
+      maxFollowers !== undefined ||
+      page !== 1 ||
+      !initialData
+
+    if (!shouldFetch) return
     const fetchData = async () => {
       try {
         setIsLoading(true)
@@ -107,7 +126,7 @@ export function useFetchAgencies({
     }
 
     fetchData()
-  }, [page, limit, countryFilter, socialMediaFilter, minFollowers, maxFollowers])
+  }, [page, limit, countryFilter, socialMediaFilter, minFollowers, maxFollowers, initialData])
 
   return {
     agencies,
