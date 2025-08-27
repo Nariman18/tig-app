@@ -15,15 +15,17 @@ const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
 
 const getOrigins = (): string[] => {
-  const origins = ['http://localhost:3000']
+  const origins = [
+    'http://localhost:3000',
+    'https://tig-app-lilac.vercel.app',
+    'https://*.vercel.app',
+  ]
 
-  if (process.env.PAYLOAD_PUBLIC_SERVER_URL) {
-    origins.push(process.env.PAYLOAD_PUBLIC_SERVER_URL)
+  if (process.env.VERCEL_URL) {
+    origins.push(`https://${process.env.VERCEL_URL}`)
   }
 
-  if (process.env.NEXT_PUBLIC_SERVER_URL) {
-    origins.push(`https://${process.env.NEXT_PUBLIC_SERVER_URL}`)
-  }
+  origins.push('https://*.vercel.app')
 
   return Array.from(new Set(origins.filter(Boolean)))
 }

@@ -17,7 +17,7 @@ const nextConfig = {
     remotePatterns: [
       {
         protocol: 'https',
-        hostname: 'https://s3.eu-central-003.backblazeb2.com',
+        hostname: 's3.eu-central-003.backblazeb2.com',
       },
       {
         protocol: 'https',
@@ -25,10 +25,22 @@ const nextConfig = {
         pathname: '/**',
       },
       {
+        protocol: 'https',
+        hostname: '*.vercel.app',
+      },
+      {
         protocol: 'http',
         hostname: 'localhost',
         pathname: '/**',
       },
+      ...(process.env.NODE_ENV === 'development'
+        ? [
+            {
+              protocol: 'https',
+              hostname: '**', // Allows any domain in development
+            },
+          ]
+        : []),
     ],
   },
 }

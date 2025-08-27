@@ -77,7 +77,13 @@ export function useFetchAgencies({
         if (minFollowers !== undefined) params.append('minFollowers', minFollowers.toString())
         if (maxFollowers !== undefined) params.append('maxFollowers', maxFollowers.toString())
 
-        const response = await fetch(`/api/agency-base?${params}`)
+        const isDevelopment = process.env.NODE_ENV === 'development'
+
+        const apiUrl = isDevelopment
+          ? `/api/agency-base?${params}`
+          : `${process.env.NEXT_PUBLIC_SERVER_URL}/api/agency-base?${params}`
+        const response = await fetch(apiUrl)
+
         if (!response.ok) {
           throw new Error('Failed to fetch agencies')
         }

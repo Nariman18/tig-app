@@ -27,7 +27,12 @@ export function useFilterOptions() {
         setIsLoading(true)
         setError(null)
 
-        const response = await fetch('/api/agency-base/filter-options')
+        const isDevelopment = process.env.NODE_ENV === 'development'
+
+        const apiUrl = isDevelopment
+          ? `/api/agency-base/filter-options`
+          : `${process.env.NEXT_PUBLIC_SERVER_URL}/api/agency-base/filter-options`
+        const response = await fetch(apiUrl)
 
         if (!response.ok) {
           throw new Error('Failed to fetch filter options')
