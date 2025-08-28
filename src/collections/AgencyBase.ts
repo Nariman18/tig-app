@@ -8,51 +8,8 @@ export const AgencyBase: CollectionConfig = {
     update: () => true,
     delete: () => true,
   },
-  hooks: {
-    beforeValidate: [
-      async ({ data, req }) => {
-        if (!data) return data
-        if (data.displayId) return data
 
-        // get (or create) the counter for AgencyBase
-        const { docs } = await req.payload.find({
-          collection: 'counters',
-          where: { name: { equals: 'agencyBase' } },
-          limit: 1,
-          depth: 0,
-        })
-
-        const current = docs[0]
-        const nextValue = (current?.value || 0) + 1
-
-        if (current) {
-          await req.payload.update({
-            collection: 'counters',
-            id: current.id,
-            data: { value: nextValue },
-            depth: 0,
-          })
-        } else {
-          await req.payload.create({
-            collection: 'counters',
-            data: { name: 'agencyBase', value: nextValue },
-            depth: 0,
-          })
-        }
-
-        data.displayId = nextValue
-        return data
-      },
-    ],
-  },
   fields: [
-    {
-      name: 'displayId',
-      type: 'number',
-      required: true,
-      unique: true,
-      admin: { readOnly: false, position: 'sidebar' }, // visible, not editable
-    },
     {
       name: 'fullname',
       type: 'text',

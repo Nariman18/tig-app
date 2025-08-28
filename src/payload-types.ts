@@ -70,7 +70,6 @@ export interface Config {
     users: User;
     AgencyBase: AgencyBase;
     media: Media;
-    counters: Counter;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
     'payload-migrations': PayloadMigration;
@@ -80,7 +79,6 @@ export interface Config {
     users: UsersSelect<false> | UsersSelect<true>;
     AgencyBase: AgencyBaseSelect<false> | AgencyBaseSelect<true>;
     media: MediaSelect<false> | MediaSelect<true>;
-    counters: CountersSelect<false> | CountersSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
     'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
     'payload-migrations': PayloadMigrationsSelect<false> | PayloadMigrationsSelect<true>;
@@ -123,6 +121,7 @@ export interface UserAuthOperations {
  */
 export interface User {
   id: number;
+  role: 'admin' | 'user';
   updatedAt: string;
   createdAt: string;
   email: string;
@@ -147,7 +146,6 @@ export interface User {
  */
 export interface AgencyBase {
   id: number;
-  displayId: number;
   fullname: string;
   nickname: string;
   followers: number;
@@ -215,17 +213,6 @@ export interface Media {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "counters".
- */
-export interface Counter {
-  id: number;
-  name: string;
-  value: number;
-  updatedAt: string;
-  createdAt: string;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "payload-locked-documents".
  */
 export interface PayloadLockedDocument {
@@ -242,10 +229,6 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'media';
         value: number | Media;
-      } | null)
-    | ({
-        relationTo: 'counters';
-        value: number | Counter;
       } | null);
   globalSlug?: string | null;
   user: {
@@ -294,6 +277,7 @@ export interface PayloadMigration {
  * via the `definition` "users_select".
  */
 export interface UsersSelect<T extends boolean = true> {
+  role?: T;
   updatedAt?: T;
   createdAt?: T;
   email?: T;
@@ -316,7 +300,6 @@ export interface UsersSelect<T extends boolean = true> {
  * via the `definition` "AgencyBase_select".
  */
 export interface AgencyBaseSelect<T extends boolean = true> {
-  displayId?: T;
   fullname?: T;
   nickname?: T;
   followers?: T;
@@ -358,16 +341,6 @@ export interface MediaSelect<T extends boolean = true> {
               filename?: T;
             };
       };
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "counters_select".
- */
-export interface CountersSelect<T extends boolean = true> {
-  name?: T;
-  value?: T;
-  updatedAt?: T;
-  createdAt?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema

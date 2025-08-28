@@ -9,7 +9,7 @@ export const Media: CollectionConfig = {
     delete: () => true,
   },
   upload: {
-    disableLocalStorage: true, // Force using Backblaze
+    disableLocalStorage: true,
     imageSizes: [
       {
         name: 'avatar',

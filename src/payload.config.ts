@@ -9,7 +9,6 @@ import { s3Storage } from '@payloadcms/storage-s3'
 import { Users } from './collections/Users'
 import { AgencyBase } from './collections/AgencyBase'
 import { Media } from './collections/Media'
-import { Counters } from './collections/Counters'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -52,7 +51,7 @@ export default buildConfig({
     },
   },
 
-  collections: [Users, AgencyBase, Media, Counters],
+  collections: [Users, AgencyBase, Media],
   editor: lexicalEditor(),
 
   secret: process.env.PAYLOAD_SECRET || (process.env.NODE_ENV === 'production' ? '' : 'dev-secret'),
