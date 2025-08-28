@@ -13,10 +13,7 @@ export interface Agency {
   country: string
   countryFlags: string
   socialMediaIcons: string[]
-  image: {
-    url: string
-    alt?: string
-  } | null
+  image: string
   imageAlt: string
   createdAt: string
   updatedAt: string
