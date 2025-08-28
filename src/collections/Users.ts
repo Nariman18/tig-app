@@ -1,4 +1,4 @@
-import type { CollectionConfig, AccessArgs, FieldAccess } from 'payload'
+import type { CollectionConfig, AccessArgs } from 'payload'
 
 const userRoles = ['admin', 'user'] as const
 export type UserRole = (typeof userRoles)[number]
@@ -38,34 +38,38 @@ export const Users: CollectionConfig = {
       admin: {
         position: 'sidebar',
       },
-      // Only allow admins to update the "role" field
       access: {
+        // Only allowing admins to update role
         update: ({ req: { user } }: AccessArgs<any>) => (user as User)?.role === 'admin',
       },
     },
   ],
 
   access: {
-    // Admins can read all; users can only read themselves
+    // Allowing admins to read all users, others can only read themselves
     read: ({ req: { user } }: AccessArgs<any>) => {
       if ((user as User)?.role === 'admin') return true
       return {
-        id: { equals: user?.id },
+        id: {
+          equals: user?.id,
+        },
       }
     },
 
-    // Only admins can create new users
+    // Disallowing public registration, only admins can create users
     create: ({ req: { user } }: AccessArgs<any>) => (user as User)?.role === 'admin',
 
-    // Admins can update anyone. Users can update only themselves (but not "role" field due to field-level access)
+    // ✅ Allow admins to update anyone, others only themselves
     update: ({ req: { user } }: AccessArgs<any>) => {
       if ((user as User)?.role === 'admin') return true
       return {
-        id: { equals: user?.id },
+        id: {
+          equals: user?.id,
+        },
       }
     },
 
-    // Only admins can delete users
+    // Only allowing admins to delete
     delete: ({ req: { user } }: AccessArgs<any>) => (user as User)?.role === 'admin',
   },
 }

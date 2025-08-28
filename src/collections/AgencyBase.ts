@@ -5,12 +5,9 @@ export const AgencyBase: CollectionConfig = {
   slug: 'AgencyBase',
   access: {
     read: () => true,
-    create: ({ req: { user } }: AccessArgs<any>) =>
-      ['admin', 'user'].includes((user as User)?.role),
-    update: ({ req: { user } }: AccessArgs<any>) =>
-      ['admin', 'user'].includes((user as User)?.role),
-    delete: ({ req: { user } }: AccessArgs<any>) =>
-      ['admin', 'user'].includes((user as User)?.role),
+    create: () => true,
+    update: () => true,
+    delete: () => true,
   },
 
   fields: [

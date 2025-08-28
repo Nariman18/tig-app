@@ -19,7 +19,6 @@ const getOrigins = (): string[] => {
     'https://tig-app-lilac.vercel.app',
     'https://*.vercel.app',
     'https://www.trendinfluencegroup.com',
-    'https://trendinfluencegroup.com',
   ]
 
   if (process.env.VERCEL_URL) {
