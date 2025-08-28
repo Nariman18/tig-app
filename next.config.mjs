@@ -18,6 +18,7 @@ const nextConfig = {
       {
         protocol: 'https',
         hostname: 's3.eu-central-003.backblazeb2.com',
+        pathname: '/**',
       },
       {
         protocol: 'https',
@@ -37,7 +38,8 @@ const nextConfig = {
         ? [
             {
               protocol: 'https',
-              hostname: '**', // Allows any domain in development
+              hostname: '**',
+              pathname: '/**', // Allows any domain in development
             },
           ]
         : []),
