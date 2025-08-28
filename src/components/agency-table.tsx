@@ -177,9 +177,9 @@ function AgencyTable() {
                           </td>
                           <td className="relative pt-5 pb-5 space-x-3 flex items-center">
                             <div className="relative w-16 h-16 min-w-[64px] min-h-[64px]">
-                              {agency.image ? (
+                              {agency.image?.url ? (
                                 <Image
-                                  src={agency.image}
+                                  src={agency.image?.url}
                                   alt={agency.imageAlt || 'avatar'}
                                   fill
                                   className="object-cover rounded-full"
