@@ -1,12 +1,16 @@
-import type { CollectionConfig } from 'payload'
+import type { AccessArgs, CollectionConfig } from 'payload'
+import { User } from './Users'
 
 export const AgencyBase: CollectionConfig = {
   slug: 'AgencyBase',
   access: {
     read: () => true,
-    create: () => true,
-    update: () => true,
-    delete: () => true,
+    create: ({ req: { user } }: AccessArgs<any>) =>
+      ['admin', 'user'].includes((user as User)?.role),
+    update: ({ req: { user } }: AccessArgs<any>) =>
+      ['admin', 'user'].includes((user as User)?.role),
+    delete: ({ req: { user } }: AccessArgs<any>) =>
+      ['admin', 'user'].includes((user as User)?.role),
   },
 
   fields: [

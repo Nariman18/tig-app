@@ -1,10 +1,10 @@
-import type { CollectionConfig, AccessArgs } from 'payload'
+import type { CollectionConfig, AccessArgs, FieldAccess } from 'payload'
 
 const userRoles = ['admin', 'user'] as const
 export type UserRole = (typeof userRoles)[number]
 
 export type User = {
-  id: string // Payload uses string IDs
+  id: number
   role: UserRole
   email: string
 }
@@ -38,24 +38,34 @@ export const Users: CollectionConfig = {
       admin: {
         position: 'sidebar',
       },
-      // 💡 TEMPORARILY allow anyone to update role (you will revert later)
+      // Only allow admins to update the "role" field
       access: {
-        update: () => true,
+        update: ({ req: { user } }: AccessArgs<any>) => (user as User)?.role === 'admin',
       },
     },
   ],
 
   access: {
-    // 💡 TEMP: Allow any user to read all users
-    read: () => true,
+    // Admins can read all; users can only read themselves
+    read: ({ req: { user } }: AccessArgs<any>) => {
+      if ((user as User)?.role === 'admin') return true
+      return {
+        id: { equals: user?.id },
+      }
+    },
 
-    // 💡 TEMP: Allow anyone to create users (you'll use this to create an admin)
-    create: () => true,
+    // Only admins can create new users
+    create: ({ req: { user } }: AccessArgs<any>) => (user as User)?.role === 'admin',
 
-    // 💡 TEMP: Allow anyone to update any user
-    update: () => true,
+    // Admins can update anyone. Users can update only themselves (but not "role" field due to field-level access)
+    update: ({ req: { user } }: AccessArgs<any>) => {
+      if ((user as User)?.role === 'admin') return true
+      return {
+        id: { equals: user?.id },
+      }
+    },
 
-    // 🛑 KEEP DELETE PROTECTED
-    delete: ({ req: { user } }: AccessArgs<any>) => (user as unknown as User)?.role === 'admin',
+    // Only admins can delete users
+    delete: ({ req: { user } }: AccessArgs<any>) => (user as User)?.role === 'admin',
   },
 }
