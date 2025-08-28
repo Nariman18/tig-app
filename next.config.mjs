@@ -22,6 +22,11 @@ const nextConfig = {
       },
       {
         protocol: 'https',
+        hostname: 'www.trendinfluencegroup.com',
+        pathname: '/**',
+      },
+      {
+        protocol: 'https',
         hostname: 'tig-app-lilac.vercel.app',
         pathname: '/**',
       },
