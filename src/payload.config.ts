@@ -9,9 +9,13 @@ import { s3Storage } from '@payloadcms/storage-s3'
 import { Users } from './collections/Users'
 import { AgencyBase } from './collections/AgencyBase'
 import { Media } from './collections/Media'
+import { preloadFlagOptions } from './hooks/getFLagOption'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
+
+// For preloading my svg flags before my panel loads
+preloadFlagOptions()
 
 const getOrigins = (): string[] => {
   const origins = [

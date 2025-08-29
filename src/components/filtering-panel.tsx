@@ -1,4 +1,3 @@
-// components/filtering-panel.tsx
 'use client'
 import { useState } from 'react'
 import { Popover, PopoverContent } from './ui/popover'

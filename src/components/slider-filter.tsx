@@ -1,4 +1,3 @@
-// components/slider-filter.tsx
 'use client'
 
 import { useEffect, useState } from 'react'

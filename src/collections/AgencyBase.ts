@@ -1,5 +1,6 @@
 import type { AccessArgs, CollectionConfig } from 'payload'
 import { User } from './Users'
+import { getFlagOptions } from '@/hooks/getFLagOption'
 
 export const AgencyBase: CollectionConfig = {
   slug: 'AgencyBase',
@@ -34,80 +35,7 @@ export const AgencyBase: CollectionConfig = {
       name: 'countryFlags',
       type: 'select',
       required: true,
-      options: [
-        {
-          label: 'United States',
-          value: '/flags/us.svg',
-        },
-        {
-          label: 'United Kingdom',
-          value: '/flags/gb.svg',
-        },
-        {
-          label: 'Canada',
-          value: '/flags/ca.svg',
-        },
-        {
-          label: 'Australia',
-          value: '/flags/au.svg',
-        },
-        {
-          label: 'Germany',
-          value: '/flags/de.svg',
-        },
-        {
-          label: 'France',
-          value: '/flags/fr.svg',
-        },
-        {
-          label: 'Italy',
-          value: '/flags/it.svg',
-        },
-        {
-          label: 'Spain',
-          value: '/flags/es.svg',
-        },
-        {
-          label: 'Brazil',
-          value: '/flags/br.svg',
-        },
-        {
-          label: 'Russia',
-          value: '/flags/ru.svg',
-        },
-        {
-          label: 'China',
-          value: '/flags/cn.svg',
-        },
-        {
-          label: 'Japan',
-          value: '/flags/jp.svg',
-        },
-        {
-          label: 'South Korea',
-          value: '/flags/kr.svg',
-        },
-        {
-          label: 'India',
-          value: '/flags/in.svg',
-        },
-        {
-          label: 'Ukraine',
-          value: '/flags/ua.svg',
-        },
-        {
-          label: 'Poland',
-          value: '/flags/pl.svg',
-        },
-        {
-          label: 'Portugal',
-          value: '/flags/pt.svg',
-        },
-        {
-          label: 'Greece',
-          value: '/flags/gr.svg',
-        },
-      ],
+      options: getFlagOptions(),
     },
     {
       name: 'socialMediaIcons',
