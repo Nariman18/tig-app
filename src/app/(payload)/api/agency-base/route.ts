@@ -1,10 +1,9 @@
 import { NextResponse } from 'next/server'
-import { getPayload } from 'payload'
-import config from '@payload-config'
+import { getPayloadClient } from '../../payloadServer'
 
 export async function GET(request: Request) {
   try {
-    const payload = await getPayload({ config })
+    const payload = await getPayloadClient()
 
     const { searchParams } = new URL(request.url)
     const page = parseInt(searchParams.get('page') || '1')

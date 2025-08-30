@@ -14,7 +14,7 @@ const socials = [
   },
   {
     id: 2,
-    link: '',
+    link: 'mailto:agency@trendinfluencegroup.com',
     icon: <RiMailFill />,
   },
   {
@@ -24,7 +24,7 @@ const socials = [
   },
   {
     id: 4,
-    link: '',
+    link: 'https://t.me/TrendInfluenceGroup',
     icon: <RiTelegramFill />,
   },
 ]
@@ -85,10 +85,6 @@ function Header() {
                 <div className="sm:text-[27px] text-[23px] hover:text-red-600">{social.icon}</div>
               </Link>
             ))}
-          </div>
-
-          <div>
-            <ThemeToggler />
           </div>
         </div>
       </div>

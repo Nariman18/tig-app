@@ -17,6 +17,14 @@ module.exports = {
       lg: '1024px',
       // => @media (min-width: 1024px) { ... }
 
+      'ipad-air-portrait': {
+        raw: '(min-width: 820px) and (max-width: 1023px) and (orientation: portrait)',
+      },
+
+      'ipad-air-landscape': {
+        raw: '(min-width: 1024px) and (max-width: 1180px) and (orientation: landscape)',
+      },
+
       'ipad-pro-portrait': {
         raw: '(min-width: 1024px) and (max-width: 1365px) and (orientation: portrait)',
       },

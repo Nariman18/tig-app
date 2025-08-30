@@ -1,13 +1,11 @@
-import payload from 'payload'
+import { getPayload } from 'payload'
 import config from '../../payload.config'
 
-let isInitialized = false
+let payloadInstance: Awaited<ReturnType<typeof getPayload>> | null = null
 
-export async function initPayloadServer() {
-  if (!isInitialized) {
-    await payload.init({
-      config,
-    })
-    isInitialized = true
+export const getPayloadClient = async () => {
+  if (!payloadInstance) {
+    payloadInstance = await getPayload({ config })
   }
+  return payloadInstance
 }

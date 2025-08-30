@@ -2,10 +2,11 @@
 import { NextResponse } from 'next/server'
 import { getPayload } from 'payload'
 import config from '@payload-config'
+import { getPayloadClient } from '@/app/(payload)/payloadServer'
 
 export async function GET() {
   try {
-    const payload = await getPayload({ config })
+    const payload = await getPayloadClient()
 
     // Getting all countries
     const countriesResult = await payload.find({
