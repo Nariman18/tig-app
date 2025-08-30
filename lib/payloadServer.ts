@@ -1,5 +1,5 @@
 import { getPayload } from 'payload'
-import config from '../../payload.config'
+import config from '../src/payload.config'
 
 let payloadInstance: Awaited<ReturnType<typeof getPayload>> | null = null
 

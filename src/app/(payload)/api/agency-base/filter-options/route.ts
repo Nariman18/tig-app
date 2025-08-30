@@ -2,7 +2,7 @@
 import { NextResponse } from 'next/server'
 import { getPayload } from 'payload'
 import config from '@payload-config'
-import { getPayloadClient } from '@/app/(payload)/payloadServer'
+import { getPayloadClient } from 'lib/payloadServer'
 
 export async function GET() {
   try {
