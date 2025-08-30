@@ -30,10 +30,16 @@ const socials = [
 ]
 
 function Header() {
+  const [hasMounted, setHasMounted] = useState(false)
+
+  useEffect(() => {
+    setHasMounted(true)
+  }, [])
+
   return (
     <motion.div
       initial={{ opacity: 0, scale: 0.6 }}
-      animate={{ opacity: 1, scale: 1 }}
+      animate={hasMounted ? { opacity: 1, scale: 1 } : {}}
       transition={{ duration: 0.6 }}
       className="
         absolute top-0 left-0 right-0 z-50
