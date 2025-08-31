@@ -202,11 +202,11 @@ function AgencyTable() {
                             <div className="relative w-16 h-16 min-w-[64px] min-h-[64px]">
                               {agency.image ? (
                                 <Image
-                                  src={encodeURIComponent(agency.image)}
+                                  src={agency.image}
                                   alt={agency.imageAlt || 'avatar'}
                                   fill
                                   className="object-cover rounded-full"
-                                  priority
+                                  unoptimized
                                 />
                               ) : (
                                 <div className="w-full h-full rounded bg-gray-200 flex items-center justify-center">
