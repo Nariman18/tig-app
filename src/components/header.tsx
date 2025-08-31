@@ -67,21 +67,25 @@ function Header() {
                   key={social.id}
                   initial={{ opacity: 0, y: 10 }}
                   animate={{ opacity: 1, y: 0 }}
-                  whileHover={{ scale: 1.2 }}
-                  whileTap={{ scale: 0.95 }}
                   transition={{
                     delay: index * 0.2,
-                    duration: 0.4,
+                    duration: 0.3,
                     type: 'spring',
                     stiffness: 400,
                     damping: 17,
                   }}
                 >
-                  <Link href={social.link} className="transition-colors duration-300 block">
-                    <div className="sm:text-[27px] text-[23px] hover:text-red-600">
-                      {social.icon}
-                    </div>
-                  </Link>
+                  <motion.div
+                    whileHover={{ scale: 1.2 }}
+                    whileTap={{ scale: 0.95 }}
+                    transition={{ duration: 0.2, type: 'spring', stiffness: 400, damping: 17 }}
+                  >
+                    <Link href={social.link} className="transition-colors duration-300 block">
+                      <div className="sm:text-[27px] text-[23px] hover:text-red-600">
+                        {social.icon}
+                      </div>
+                    </Link>
+                  </motion.div>
                 </motion.div>
               ))}
             </div>
