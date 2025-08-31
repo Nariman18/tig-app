@@ -45,10 +45,22 @@ function Header() {
     <div className="fixed top-0 left-0 right-0 z-50 px-2">
       <motion.header
         initial={false}
-        animate={isVisible ? { opacity: 1, y: 0 } : { opacity: 0, y: -40 }}
+        animate={
+          isVisible
+            ? {
+                opacity: 1,
+                y: 0,
+                scale: 1,
+              }
+            : {
+                opacity: 0,
+                y: -60,
+                scale: 0.95,
+              }
+        }
         transition={{
-          duration: 0.6,
-          ease: [0.16, 1, 0.3, 1], // Custom cubic bezier for smooth finish
+          duration: 0.8,
+          ease: [0.34, 1.56, 0.64, 1], // Custom cubic bezier for smooth finish
         }}
         className="
           bg-[#000006]
@@ -58,7 +70,7 @@ function Header() {
           shadow-[0_5px_30px_#00bbf0]
           backdrop-blur-md
           border border-transparent
-          will-change-transform
+          will-change-transform origin-top
         "
         style={{
           // Force GPU acceleration
@@ -70,8 +82,21 @@ function Header() {
           <Link href="/" className="block">
             <motion.div
               className="relative sm:w-20 sm:h-20 w-16 h-16 ml-0 sm:ml-3"
-              whileHover={{ scale: 1.05 }}
-              transition={{ type: 'spring', stiffness: 400, damping: 10 }}
+              initial={false}
+              animate={
+                isVisible
+                  ? {
+                      scale: 1,
+                      rotate: 0,
+                    }
+                  : {
+                      scale: 0.8,
+                      rotate: -5, // Slight rotation for more dynamic effect
+                    }
+              }
+              whileHover={{ scale: 1.1 }}
+              whileTap={{ scale: 0.95 }}
+              transition={{ type: 'spring', stiffness: 400, damping: 17 }}
             >
               <Image
                 src="/IMG_3358.png"
@@ -94,12 +119,32 @@ function Header() {
 
           <div className="ml-auto flex items-center sm:space-x-6 space-x-4 sm:pr-6 pr-2">
             <div className="flex gap-4">
-              {socials.map((social) => (
+              {socials.map((social, index) => (
                 <motion.div
                   key={social.id}
+                  initial={false}
+                  animate={
+                    isVisible
+                      ? {
+                          opacity: 1,
+                          y: 0,
+                          scale: 1,
+                        }
+                      : {
+                          opacity: 0,
+                          y: 20,
+                          scale: 0.8,
+                        }
+                  }
                   whileHover={{ scale: 1.2 }}
                   whileTap={{ scale: 0.95 }}
-                  transition={{ type: 'spring', stiffness: 400, damping: 17 }}
+                  transition={{
+                    delay: 0.4 + index * 0.1,
+                    duration: 0.5,
+                    type: 'spring',
+                    stiffness: 400,
+                    damping: 17,
+                  }}
                 >
                   <Link href={social.link} className="transition-colors duration-300 block">
                     <div className="sm:text-[27px] text-[23px] hover:text-red-600">
