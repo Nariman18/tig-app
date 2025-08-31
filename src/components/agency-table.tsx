@@ -25,10 +25,17 @@ function AgencyTable() {
   const [maxFollowers, setMaxFollowers] = useState<number | undefined>()
 
   // Fetching all filtering data
-  const { countries: countryOptions, socialMedias: socialMediaOptions } = useFilterOptions()
+  const { data: filterData } = useFilterOptions()
+
+  const countryOptions = filterData?.countries || []
+  const socialMediaOptions = filterData?.socialMedias || []
 
   // Fetching only agencies data using TanStack Query hook
-  const { data, isLoading, isError } = useAgencies({
+  const {
+    data: agencyData,
+    isLoading,
+    isError,
+  } = useAgencies({
     page: currentPage,
     limit: 50,
     countryFilter: countryFilter || undefined,
@@ -37,8 +44,8 @@ function AgencyTable() {
     maxFollowers,
   })
 
-  const agencies = data?.agencies || []
-  const pagination: PaginationMeta = data?.pagination || {
+  const agencies = agencyData?.agencies || []
+  const pagination: PaginationMeta = agencyData?.pagination || {
     currentPage: 1,
     totalPages: 1,
     hasPrevPage: false,
@@ -195,7 +202,7 @@ function AgencyTable() {
                             <div className="relative w-16 h-16 min-w-[64px] min-h-[64px]">
                               {agency.image ? (
                                 <Image
-                                  src={agency.image}
+                                  src={encodeURIComponent(agency.image)}
                                   alt={agency.imageAlt || 'avatar'}
                                   fill
                                   className="object-cover rounded-full"

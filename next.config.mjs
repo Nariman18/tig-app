@@ -22,7 +22,7 @@ const nextConfig = {
       },
       {
         protocol: 'https',
-        hostname: 'www.trendinfluencegroup.com',
+        hostname: '**.trendinfluencegroup.com',
         pathname: '/**',
       },
       {
