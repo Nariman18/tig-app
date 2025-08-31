@@ -22,11 +22,6 @@ const nextConfig = {
       },
       {
         protocol: 'https',
-        hostname: '**.trendinfluencegroup.com',
-        pathname: '/**',
-      },
-      {
-        protocol: 'https',
         hostname: 'www.trendinfluencegroup.com',
         pathname: '/**',
       },
@@ -41,23 +36,10 @@ const nextConfig = {
         pathname: '/**',
       },
       {
-        protocol: 'https',
-        hostname: '*.vercel.app',
-      },
-      {
         protocol: 'http',
         hostname: 'localhost',
         pathname: '/**',
       },
-      ...(process.env.NODE_ENV === 'development'
-        ? [
-            {
-              protocol: 'https',
-              hostname: '**',
-              pathname: '/**', // Allows any domain in development
-            },
-          ]
-        : []),
     ],
   },
 }

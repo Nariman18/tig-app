@@ -18,34 +18,19 @@ const dirname = path.dirname(filename)
 preloadFlagOptions()
 
 const getOrigins = (): string[] => {
-  const origins = [
-    'http://localhost:3000',
+  if (process.env.NODE_ENV === 'development') {
+    return ['http://localhost:3000', 'http://localhost:3001']
+  }
+
+  return [
     'https://tig-app-lilac.vercel.app',
-    'https://*.vercel.app',
     'https://www.trendinfluencegroup.com',
     'https://trendinfluencegroup.com',
   ]
-
-  if (process.env.VERCEL_URL) {
-    origins.push(`https://${process.env.VERCEL_URL}`)
-  }
-
-  origins.push('https://*.vercel.app')
-
-  return Array.from(new Set(origins.filter(Boolean)))
-}
-
-if (process.env.NODE_ENV === 'development') {
-  if (!process.env.DATABASE_URI) {
-    console.warn('⚠️ DATABASE_URI is not defined in development!')
-  }
-  if (!process.env.PAYLOAD_SECRET) {
-    console.warn('⚠️ PAYLOAD_SECRET is not defined in development!')
-  }
 }
 
 export default buildConfig({
-  serverURL: process.env.PAYLOAD_PUBLIC_SERVER_URL || 'http://localhost:3000',
+  serverURL: process.env.PAYLOAD_PUBLIC_SERVER_URL,
 
   cors: getOrigins(),
   csrf: getOrigins(),
@@ -69,7 +54,6 @@ export default buildConfig({
   db: postgresAdapter({
     pool: {
       connectionString: process.env.DATABASE_URI || '',
-
       ssl:
         process.env.NODE_ENV === 'production'
           ? {
