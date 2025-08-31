@@ -3,65 +3,53 @@
 import Link from 'next/link'
 import Image from 'next/image'
 import { RiTelegramFill, RiInstagramFill, RiWhatsappFill, RiMailFill } from 'react-icons/ri'
-import { AnimatePresence, motion } from 'framer-motion'
+import { motion } from 'framer-motion'
 import { useEffect, useState } from 'react'
 
 const socials = [
-  {
-    id: 1,
-    link: '',
-    icon: <RiInstagramFill />,
-  },
-  {
-    id: 2,
-    link: 'mailto:agency@trendinfluencegroup.com',
-    icon: <RiMailFill />,
-  },
-  {
-    id: 3,
-    link: '',
-    icon: <RiWhatsappFill />,
-  },
-  {
-    id: 4,
-    link: 'https://t.me/TrendInfluenceGroup',
-    icon: <RiTelegramFill />,
-  },
+  { id: 1, link: '', icon: <RiInstagramFill /> },
+  { id: 2, link: 'mailto:agency@trendinfluencegroup.com', icon: <RiMailFill /> },
+  { id: 3, link: '', icon: <RiWhatsappFill /> },
+  { id: 4, link: 'https://t.me/TrendInfluenceGroup', icon: <RiTelegramFill /> },
 ]
 
 function Header() {
   const [hasMounted, setHasMounted] = useState(false)
 
   useEffect(() => {
-    setHasMounted(true)
+    const timeout = setTimeout(() => setHasMounted(true), 200)
+    return () => clearTimeout(timeout)
   }, [])
 
   return (
-    <AnimatePresence>
-      <motion.div
-        initial={{ opacity: 0, scale: 0.6 }}
-        animate={hasMounted ? { opacity: 1, scale: 1 } : {}}
-        transition={{ duration: 0.6 }}
-        className="
-        absolute top-0 left-0 right-0 z-50
-        px-2 
+    <div
+      className="
+        absolute top-0 left-0 right-0 z-50 px-2
       "
+    >
+      <motion.div
+        initial={{ opacity: 0, scale: 0.75, y: -10 }}
+        animate={hasMounted ? { opacity: 1, scale: 1, y: 0 } : {}}
+        transition={{ duration: 0.6, ease: 'easeOut' }}
+        className="w-full max-w-full mx-auto"
       >
         <header
+          style={{
+            borderRadius: '0.75rem',
+            boxShadow: '0 5px 30px #00bbf0',
+            backdropFilter: 'blur(12px)',
+            WebkitBackdropFilter: 'blur(12px)',
+          }}
           className="
-          w-full mx-auto
-          bg-[#000006]
-          rounded-xl
-          shadow-sm dark:shadow-[0_5px_30px_#00bbf0]
-          backdrop-blur-md
-          transition-shadow duration-500
-          p-4
-        "
+            bg-[#000006]
+            transition-shadow duration-500
+            p-4
+            will-change-transform origin-top
+          "
         >
           <div className="flex w-full items-center px-0 xl:px-9">
-            <Link href={'/'}>
+            <Link href="/">
               <div className="relative logo-animation sm:w-20 sm:h-20 w-16 h-16 ml-0 sm:ml-3">
-                {/* Light theme logo */}
                 <Image
                   src="/IMG_3358.png"
                   alt="Logo"
@@ -69,7 +57,6 @@ function Header() {
                   className="md:object-contain object-cover dark:hidden"
                   priority
                 />
-                {/* Dark theme logo */}
                 <Image
                   src="/IMG_3359.png"
                   alt="Logo"
@@ -94,10 +81,8 @@ function Header() {
           </div>
         </header>
       </motion.div>
-    </AnimatePresence>
+    </div>
   )
 }
 
 export default Header
-
-//shadow-[0_5px_40px_#F0E6D8]
