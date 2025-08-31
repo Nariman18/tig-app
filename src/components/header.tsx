@@ -17,70 +17,70 @@ function Header() {
   const [hasMounted, setHasMounted] = useState(false)
 
   useEffect(() => {
-    const timeout = setTimeout(() => setHasMounted(true), 200)
-    return () => clearTimeout(timeout)
+    // Use requestAnimationFrame for smoother animation initiation
+    const timer = requestAnimationFrame(() => setHasMounted(true))
+    return () => cancelAnimationFrame(timer)
   }, [])
 
   return (
-    <div
-      className="
-        absolute top-0 left-0 right-0 z-50 px-2
-      "
-    >
-      <motion.div
-        initial={{ opacity: 0, scale: 0.75, y: -10 }}
-        animate={hasMounted ? { opacity: 1, scale: 1, y: 0 } : {}}
-        transition={{ duration: 0.6, ease: 'easeOut' }}
-        className="w-full max-w-full mx-auto"
+    <div className="fixed top-0 left-0 right-0 z-50 px-2">
+      <motion.header
+        initial={{ opacity: 0, y: -50, scale: 0.95 }}
+        animate={hasMounted ? { opacity: 1, y: 0, scale: 1 } : { opacity: 0, y: -50, scale: 0.95 }}
+        transition={{
+          duration: 0.8,
+          ease: [0.25, 0.46, 0.45, 0.94],
+          scale: {
+            duration: 0.6,
+            ease: 'easeOut',
+          },
+        }}
+        className="
+          bg-[#000006]
+          p-4
+          w-full max-w-full mx-auto
+          rounded-xl
+          shadow-[0_5px_30px_#00bbf0]
+          backdrop-blur-md
+        "
       >
-        <header
-          style={{
-            borderRadius: '0.75rem',
-            boxShadow: '0 5px 30px #00bbf0',
-            backdropFilter: 'blur(12px)',
-            WebkitBackdropFilter: 'blur(12px)',
-          }}
-          className="
-            bg-[#000006]
-            transition-shadow duration-500
-            p-4
-            will-change-transform origin-top
-          "
-        >
-          <div className="flex w-full items-center px-0 xl:px-9">
-            <Link href="/">
-              <div className="relative logo-animation sm:w-20 sm:h-20 w-16 h-16 ml-0 sm:ml-3">
-                <Image
-                  src="/IMG_3358.png"
-                  alt="Logo"
-                  fill
-                  className="md:object-contain object-cover dark:hidden"
-                  priority
-                />
-                <Image
-                  src="/IMG_3359.png"
-                  alt="Logo"
-                  fill
-                  className="md:object-contain object-cover hidden dark:block"
-                  priority
-                />
-              </div>
-            </Link>
+        <div className="flex w-full items-center px-0 xl:px-9">
+          <Link href="/">
+            <div className="relative sm:w-20 sm:h-20 w-16 h-16 ml-0 sm:ml-3">
+              <Image
+                src="/IMG_3358.png"
+                alt="Logo"
+                fill
+                className="md:object-contain object-cover dark:hidden"
+                priority
+              />
+              <Image
+                src="/IMG_3359.png"
+                alt="Logo"
+                fill
+                className="md:object-contain object-cover hidden dark:block"
+                priority
+              />
+            </div>
+          </Link>
 
-            <div className="ml-auto flex items-center sm:space-x-6 space-x-4 sm:pr-6 pr-2">
-              <div className="flex gap-4">
-                {socials.map((social) => (
-                  <Link href={social.link} className="social-button-animation" key={social.id}>
-                    <div className="sm:text-[27px] text-[23px] hover:text-red-600">
-                      {social.icon}
-                    </div>
-                  </Link>
-                ))}
-              </div>
+          <div className="ml-auto flex items-center sm:space-x-6 space-x-4 sm:pr-6 pr-2">
+            <div className="flex gap-4">
+              {socials.map((social) => (
+                <Link
+                  href={social.link}
+                  className="transition-transform duration-300 hover:scale-110"
+                  key={social.id}
+                >
+                  <div className="sm:text-[27px] text-[23px] hover:text-red-600 transition-colors duration-300">
+                    {social.icon}
+                  </div>
+                </Link>
+              ))}
             </div>
           </div>
-        </header>
-      </motion.div>
+        </div>
+      </motion.header>
     </div>
   )
 }
