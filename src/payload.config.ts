@@ -69,7 +69,7 @@ export default buildConfig({
   db: postgresAdapter({
     pool: {
       connectionString: process.env.DATABASE_URI || '',
-      max: 10, // This limits simultaneous open DB connections from PayloadCMS to 10 max by protecting Render from crash
+      max: 10, // This limits simultaneous open DB connections from PayloadCMS to 10 max loads protecting Render from crash
       ssl:
         process.env.NODE_ENV === 'production'
           ? {

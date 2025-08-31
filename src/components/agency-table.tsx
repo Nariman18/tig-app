@@ -206,7 +206,7 @@ function AgencyTable() {
                                   alt={agency.imageAlt || 'avatar'}
                                   fill
                                   className="object-cover rounded-full"
-                                  unoptimized
+                                  priority
                                 />
                               ) : (
                                 <div className="w-full h-full rounded bg-gray-200 flex items-center justify-center">
