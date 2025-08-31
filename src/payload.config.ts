@@ -47,8 +47,20 @@ if (process.env.NODE_ENV === 'development') {
 export default buildConfig({
   serverURL: process.env.PAYLOAD_PUBLIC_SERVER_URL || 'http://localhost:3000',
 
-  cors: getOrigins(),
-  csrf: getOrigins(),
+  cors: [
+    'http://localhost:3000',
+    'https://tig-app-lilac.vercel.app',
+    'https://*.vercel.app',
+    'https://www.trendinfluencegroup.com',
+    'https://trendinfluencegroup.com',
+  ],
+  csrf: [
+    'http://localhost:3000',
+    'https://tig-app-lilac.vercel.app',
+    'https://*.vercel.app',
+    'https://www.trendinfluencegroup.com',
+    'https://trendinfluencegroup.com',
+  ],
 
   admin: {
     user: Users.slug,
