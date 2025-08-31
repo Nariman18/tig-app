@@ -2,6 +2,8 @@ import React from 'react'
 import '../global.css'
 import { ThemeProvider } from '@/components/ThemeProvider'
 import Header from '@/components/header'
+import { QueryClientProvider } from '@tanstack/react-query'
+import { queryClient } from '@/lib/queryClient'
 
 export const metadata = {
   description:
@@ -22,7 +24,7 @@ export default async function RootLayout(props: { children: React.ReactNode }) {
           <ThemeProvider>
             {' '}
             <Header />
-            {children}
+            <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>
           </ThemeProvider>
         </main>
       </body>

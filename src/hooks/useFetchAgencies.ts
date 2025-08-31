@@ -58,7 +58,18 @@ export const useAgencies = ({
       const response = await fetch(apiUrl)
       if (!response.ok) throw new Error('Failed to fetch agencies')
 
-      return response.json()
+      const data = await response.json()
+
+      return {
+        agencies: data.docs,
+        pagination: {
+          currentPage: data.currentPage,
+          totalPages: data.totalPages,
+          hasPrevPage: data.hasPrevPage,
+          hasNextPage: data.hasNextPage,
+        },
+        noResultsWithFilters: data.noResultsWithFilters,
+      }
     },
     staleTime: 1000 * 60 * 5, // 5 minutes
     retry: 2,
