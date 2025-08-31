@@ -6,6 +6,23 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Preventing layout shifts during header animation */
+html,
+body {
+  overflow-x: hidden;
+  width: 100%;
+}
+
+/* Ensuring smooth scrolling */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Preventing horizontal overflow during animations */
+body {
+  position: relative;
+}
+
 :root {
   --background: #ffff;
   --foreground: 240 19% 16%;

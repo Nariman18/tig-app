@@ -15,18 +15,35 @@ const socials = [
 
 function Header() {
   const [hasMounted, setHasMounted] = useState(false)
+  const [isReducedMotion, setIsReducedMotion] = useState(false)
 
   useEffect(() => {
-    // Use requestAnimationFrame for smoother animation initiation
-    const timer = requestAnimationFrame(() => setHasMounted(true))
-    return () => cancelAnimationFrame(timer)
+    // Check if user prefers reduced motion
+    const mediaQuery = window.matchMedia('(prefers-reduced-motion: reduce)')
+    setIsReducedMotion(mediaQuery.matches)
+
+    // Listen for changes
+    const handleChange = () => setIsReducedMotion(mediaQuery.matches)
+    mediaQuery.addEventListener('change', handleChange)
+
+    // Start animation with a slight delay to ensure DOM is ready
+    const timer = setTimeout(() => setHasMounted(true), 50)
+
+    return () => {
+      clearTimeout(timer)
+      mediaQuery.removeEventListener('change', handleChange)
+    }
   }, [])
 
   return (
     <div className="fixed top-0 left-0 right-0 z-50 px-2">
       <motion.header
-        initial={{ opacity: 0, y: -50, scale: 0.75 }}
-        animate={hasMounted ? { opacity: 1, y: 0, scale: 1 } : { opacity: 0, y: -50, scale: 0.75 }}
+        initial={isReducedMotion ? false : { opacity: 0, y: -50, scale: 0.75 }}
+        animate={
+          hasMounted || isReducedMotion
+            ? { opacity: 1, y: 0, scale: 1 }
+            : { opacity: 0, y: -50, scale: 0.75 }
+        }
         transition={{
           duration: 0.8,
           ease: [0.25, 0.46, 0.45, 0.94],
@@ -34,6 +51,10 @@ function Header() {
             duration: 0.6,
             ease: 'easeOut',
           },
+        }}
+        style={{
+          willChange: 'transform, opacity',
+          transform: 'translateZ(0)', // Force GPU acceleration
         }}
         className="
           bg-[#000006]
@@ -46,7 +67,11 @@ function Header() {
       >
         <div className="flex w-full items-center px-0 xl:px-9">
           <Link href="/">
-            <div className="relative sm:w-20 sm:h-20 w-16 h-16 ml-0 sm:ml-3">
+            <motion.div
+              className="relative sm:w-20 sm:h-20 w-16 h-16 ml-0 sm:ml-3"
+              whileHover={{ scale: 1.05 }}
+              transition={{ type: 'spring', stiffness: 400, damping: 10 }}
+            >
               <Image
                 src="/IMG_3358.png"
                 alt="Logo"
@@ -61,21 +86,24 @@ function Header() {
                 className="md:object-contain object-cover hidden dark:block"
                 priority
               />
-            </div>
+            </motion.div>
           </Link>
 
           <div className="ml-auto flex items-center sm:space-x-6 space-x-4 sm:pr-6 pr-2">
             <div className="flex gap-4">
               {socials.map((social) => (
-                <Link
-                  href={social.link}
-                  className="transition-transform duration-300 hover:scale-110"
+                <motion.div
                   key={social.id}
+                  whileHover={{ scale: 1.2 }}
+                  whileTap={{ scale: 0.95 }}
+                  transition={{ type: 'spring', stiffness: 400, damping: 17 }}
                 >
-                  <div className="sm:text-[27px] text-[23px] hover:text-red-600 transition-colors duration-300">
-                    {social.icon}
-                  </div>
-                </Link>
+                  <Link href={social.link} className="transition-colors duration-300">
+                    <div className="sm:text-[27px] text-[23px] hover:text-red-600">
+                      {social.icon}
+                    </div>
+                  </Link>
+                </motion.div>
               ))}
             </div>
           </div>
