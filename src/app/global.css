@@ -6,31 +6,22 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Preventing layout shifts during header animation */
+/* Basic layout normalization */
 html,
 body {
-  overflow-x: hidden;
   width: 100%;
 }
 
-/* Ensuring smooth scrolling */
+/* Smooth scrolling for better UX */
 html {
   scroll-behavior: smooth;
 }
 
-/* Preventing horizontal overflow during animations */
-body {
-  position: relative;
-}
-
+/* Consistent box model */
 *,
 *::before,
 *::after {
   box-sizing: border-box;
-}
-
-header {
-  contain: layout paint;
 }
 
 :root {
