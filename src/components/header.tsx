@@ -61,7 +61,7 @@ function Header() {
           will-change-transform
         "
         style={{
-          // Forcing GPU acceleration
+          // Force GPU acceleration
           transform: 'translateZ(0)',
           backfaceVisibility: 'hidden',
         }}
