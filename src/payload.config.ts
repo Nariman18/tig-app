@@ -47,20 +47,8 @@ if (process.env.NODE_ENV === 'development') {
 export default buildConfig({
   serverURL: process.env.PAYLOAD_PUBLIC_SERVER_URL || 'http://localhost:3000',
 
-  cors: [
-    'http://localhost:3000',
-    'https://tig-app-lilac.vercel.app',
-    'https://*.vercel.app',
-    'https://www.trendinfluencegroup.com',
-    'https://trendinfluencegroup.com',
-  ],
-  csrf: [
-    'http://localhost:3000',
-    'https://tig-app-lilac.vercel.app',
-    'https://*.vercel.app',
-    'https://www.trendinfluencegroup.com',
-    'https://trendinfluencegroup.com',
-  ],
+  cors: getOrigins(),
+  csrf: getOrigins(),
 
   admin: {
     user: Users.slug,
@@ -81,7 +69,7 @@ export default buildConfig({
   db: postgresAdapter({
     pool: {
       connectionString: process.env.DATABASE_URI || '',
-      max: 10, // This limits simultaneous open DB connections from PayloadCMS to 10 max loads protecting Render from crash
+
       ssl:
         process.env.NODE_ENV === 'production'
           ? {
