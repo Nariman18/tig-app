@@ -1,6 +1,7 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
+import debounce from 'lodash.debounce'
 
 export interface Agency {
   id: string
@@ -42,6 +43,9 @@ interface UseFetchAgenciesProps {
   maxFollowers?: number
 }
 
+// In-memory cache
+const cache = new Map<string, any>()
+
 export function useFetchAgencies({
   page = 1,
   limit = 50,
@@ -63,33 +67,47 @@ export function useFetchAgencies({
     appliedFilters: {},
   })
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        setIsLoading(true)
+  const fetchData = async () => {
+    try {
+      setIsLoading(true)
 
-        const params = new URLSearchParams()
-        params.append('page', page.toString())
-        params.append('limit', limit.toString())
-        if (countryFilter) params.append('country', countryFilter)
-        if (socialMediaFilter) params.append('socialMedia', socialMediaFilter)
-        if (minFollowers !== undefined) params.append('minFollowers', minFollowers.toString())
-        if (maxFollowers !== undefined) params.append('maxFollowers', maxFollowers.toString())
+      const params = new URLSearchParams()
+      params.append('page', page.toString())
+      params.append('limit', limit.toString())
+      if (countryFilter) params.append('country', countryFilter)
+      if (socialMediaFilter) params.append('socialMedia', socialMediaFilter)
+      if (minFollowers !== undefined) params.append('minFollowers', minFollowers.toString())
+      if (maxFollowers !== undefined) params.append('maxFollowers', maxFollowers.toString())
 
-        const isDevelopment = process.env.NODE_ENV === 'development'
+      const key = params.toString()
+      if (cache.has(key)) {
+        const data = cache.get(key)
+        setAgencies(data.docs)
+        setPagination(data.pagination)
+        return
+      }
 
-        const apiUrl = isDevelopment
-          ? `/api/agency-base?${params}`
-          : `${process.env.NEXT_PUBLIC_SERVER_URL}/api/agency-base?${params}`
-        const response = await fetch(apiUrl)
+      const isDevelopment = process.env.NODE_ENV === 'development'
 
-        if (!response.ok) {
-          throw new Error('Failed to fetch agencies')
-        }
+      const apiUrl = isDevelopment
+        ? `/api/agency-base?${params}`
+        : `${process.env.NEXT_PUBLIC_SERVER_URL}/api/agency-base?${params}`
 
-        const data = await response.json()
-        setAgencies(data.docs || [])
-        setPagination({
+      // Delay for preventing rapid reload abuse
+      await new Promise((resolve) => setTimeout(resolve, 250))
+
+      const response = await fetch(apiUrl)
+
+      if (!response.ok) {
+        throw new Error('Failed to fetch agencies')
+      }
+
+      const data = await response.json()
+
+      // Caching result in memory
+      cache.set(key, {
+        docs: data.docs,
+        pagination: {
           totalPages: data.totalPages,
           totalDocs: data.totalDocs,
           currentPage: data.currentPage,
@@ -97,15 +115,36 @@ export function useFetchAgencies({
           hasPrevPage: data.hasPrevPage,
           noResultsWithFilters: data.noResultsWithFilters,
           appliedFilters: data.appliedFilters,
-        })
-      } catch (err) {
-        setError(err instanceof Error ? err.message : 'Unknown error')
-      } finally {
-        setIsLoading(false)
-      }
-    }
+        },
+      })
 
-    fetchData()
+      setAgencies(data.docs || [])
+      setPagination({
+        totalPages: data.totalPages,
+        totalDocs: data.totalDocs,
+        currentPage: data.currentPage,
+        hasNextPage: data.hasNextPage,
+        hasPrevPage: data.hasPrevPage,
+        noResultsWithFilters: data.noResultsWithFilters,
+        appliedFilters: data.appliedFilters,
+      })
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'Unknown error')
+    } finally {
+      setIsLoading(false)
+    }
+  }
+
+  // Debouncing my call
+  const debounceRef = useRef(
+    debounce(() => {
+      fetchData()
+    }, 300),
+  )
+
+  useEffect(() => {
+    debounceRef.current()
+    return () => debounceRef.current.cancel()
   }, [page, limit, countryFilter, socialMediaFilter, minFollowers, maxFollowers])
 
   return {

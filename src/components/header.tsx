@@ -25,8 +25,8 @@ function Header() {
   return (
     <div className="fixed top-0 left-0 right-0 z-50 px-2">
       <motion.header
-        initial={{ opacity: 0, y: -50, scale: 0.95 }}
-        animate={hasMounted ? { opacity: 1, y: 0, scale: 1 } : { opacity: 0, y: -50, scale: 0.95 }}
+        initial={{ opacity: 0, y: -50, scale: 0.75 }}
+        animate={hasMounted ? { opacity: 1, y: 0, scale: 1 } : { opacity: 0, y: -50, scale: 0.75 }}
         transition={{
           duration: 0.8,
           ease: [0.25, 0.46, 0.45, 0.94],
