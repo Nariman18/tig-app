@@ -20,11 +20,8 @@ export default async function RootLayout(props: { children: React.ReactNode }) {
       <body>
         <main>
           <ThemeProvider>
-            <section className="relative w-full flex">
-              {' '}
-              <Header />
-            </section>
-
+            {' '}
+            <Header />
             {children}
           </ThemeProvider>
         </main>

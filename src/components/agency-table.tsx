@@ -1,13 +1,21 @@
 'use client'
 import Image from 'next/image'
 import { FilteringPanel } from './filtering-panel'
-import { useFetchAgencies } from '@/hooks/useFetchAgencies'
+
 import { useState } from 'react'
 import React from 'react'
 import { useFilterOptions } from '@/hooks/useFilterOptions'
 import Pagination from './pagination'
 import { SliderFilter } from './slider-filter'
 import LoadingSpinner from './loading-spinner'
+import { Agency, useAgencies } from '@/hooks/useFetchAgencies'
+
+interface PaginationMeta {
+  currentPage: number
+  totalPages: number
+  hasPrevPage: boolean
+  hasNextPage: boolean
+}
 
 function AgencyTable() {
   const [currentPage, setCurrentPage] = useState(1)
@@ -19,8 +27,8 @@ function AgencyTable() {
   // Fetching all filtering data
   const { countries: countryOptions, socialMedias: socialMediaOptions } = useFilterOptions()
 
-  // Fetching only agencies data
-  const { agencies, isLoading, error, pagination } = useFetchAgencies({
+  // Fetching only agencies data using TanStack Query hook
+  const { data, isLoading, isError } = useAgencies({
     page: currentPage,
     limit: 50,
     countryFilter: countryFilter || undefined,
@@ -28,6 +36,14 @@ function AgencyTable() {
     minFollowers,
     maxFollowers,
   })
+
+  const agencies = data?.agencies || []
+  const pagination: PaginationMeta = data?.pagination || {
+    currentPage: 1,
+    totalPages: 1,
+    hasPrevPage: false,
+    hasNextPage: false,
+  }
 
   const handleFilterChange = (filterType: string, value: string) => {
     setCurrentPage(1)
@@ -76,7 +92,7 @@ function AgencyTable() {
         <LoadingSpinner />
       </div>
     )
-  if (error)
+  if (isError)
     return (
       <div className="text-red-500 text-[20px] flex items-center justify-center py-10">
         Error loading data
@@ -170,7 +186,7 @@ function AgencyTable() {
                       </tr>
                     </thead>
                     <tbody className="divide-y divide-gray-600 dark:divide-gray-700">
-                      {agencies.map((agency) => (
+                      {agencies.map((agency: Agency) => (
                         <tr key={agency.id} className="grid grid-cols-7 gap-x-10">
                           <td className="whitespace-nowrap pt-5 pb-5 flex items-center justify-center text-[17px] font-quicksand font-[500]">
                             {agency.displayNumber}
@@ -219,7 +235,7 @@ function AgencyTable() {
                           <td className="whitespace-nowrap pt-5 pb-5 text-lg font-quicksand font-[600]">
                             <div className="relative flex items-center justify-center w-full h-full">
                               {agency.socialMediaIcons && agency.socialMediaIcons.length > 0 ? (
-                                agency.socialMediaIcons.map((icon, index) => {
+                                agency.socialMediaIcons.map((icon: string, index: number) => {
                                   // Determine background color based on platform
                                   const getBackgroundColor = (iconPath: string) => {
                                     if (iconPath.includes('instagram'))
