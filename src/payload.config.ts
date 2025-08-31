@@ -29,6 +29,8 @@ const getOrigins = (): string[] => {
   ]
 }
 
+const isBackblazeBlocked = process.env.BACKBLAZE_BLOCKED === 'true'
+
 export default buildConfig({
   serverURL: process.env.PAYLOAD_PUBLIC_SERVER_URL,
 
@@ -67,20 +69,25 @@ export default buildConfig({
   plugins: [
     payloadCloudPlugin(),
 
-    s3Storage({
-      collections: {
-        media: {},
-      },
-      bucket: process.env.BACKBLAZE_BUCKET_NAME!,
-      config: {
-        endpoint: process.env.BACKBLAZE_ENDPOINT!,
-        region: process.env.BACKBLAZE_REGION!,
-        credentials: {
-          accessKeyId: process.env.BACKBLAZE_KEY_ID!,
-          secretAccessKey: process.env.BACKBLAZE_APPLICATION_KEY!,
-        },
-        forcePathStyle: true,
-      },
-    }),
+    // Only enable S3 storage if Backblaze is not blocked
+    ...(isBackblazeBlocked
+      ? []
+      : [
+          s3Storage({
+            collections: {
+              media: {},
+            },
+            bucket: process.env.BACKBLAZE_BUCKET_NAME!,
+            config: {
+              endpoint: process.env.BACKBLAZE_ENDPOINT!,
+              region: process.env.BACKBLAZE_REGION!,
+              credentials: {
+                accessKeyId: process.env.BACKBLAZE_KEY_ID!,
+                secretAccessKey: process.env.BACKBLAZE_APPLICATION_KEY!,
+              },
+              forcePathStyle: true,
+            },
+          }),
+        ]),
   ],
 })
