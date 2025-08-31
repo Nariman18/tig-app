@@ -23,6 +23,16 @@ body {
   position: relative;
 }
 
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+header {
+  contain: layout paint;
+}
+
 :root {
   --background: #ffff;
   --foreground: 240 19% 16%;

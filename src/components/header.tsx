@@ -4,7 +4,7 @@ import Link from 'next/link'
 import Image from 'next/image'
 import { RiTelegramFill, RiInstagramFill, RiWhatsappFill, RiMailFill } from 'react-icons/ri'
 import { motion } from 'framer-motion'
-import { useEffect, useState, useRef } from 'react'
+import { useEffect, useState } from 'react'
 
 const socials = [
   { id: 1, link: '', icon: <RiInstagramFill /> },
@@ -14,47 +14,41 @@ const socials = [
 ]
 
 function Header() {
-  const [hasMounted, setHasMounted] = useState(false)
-  const [isReducedMotion, setIsReducedMotion] = useState(false)
-  const headerRef = useRef(null)
+  const [isVisible, setIsVisible] = useState(false)
 
   useEffect(() => {
-    // Check if user prefers reduced motion
+    // Skip animation entirely if user prefers reduced motion
     const mediaQuery = window.matchMedia('(prefers-reduced-motion: reduce)')
-    setIsReducedMotion(mediaQuery.matches)
-
-    // Listen for changes
-    const handleChange = () => setIsReducedMotion(mediaQuery.matches)
-    mediaQuery.addEventListener('change', handleChange)
-
-    // Use a more reliable method to detect when DOM is ready
-    const checkDOMReady = () => {
-      if (document.readyState === 'complete') {
-        setHasMounted(true)
-      } else {
-        window.addEventListener('load', () => setHasMounted(true))
-      }
+    if (mediaQuery.matches) {
+      setIsVisible(true)
+      return
     }
 
-    // Small delay to ensure all elements are properly rendered
-    const timer = setTimeout(checkDOMReady, 100)
+    // Use a different approach - wait for next frame after load
+    const handleLoad = () => {
+      requestAnimationFrame(() => {
+        requestAnimationFrame(() => {
+          setIsVisible(true)
+        })
+      })
+    }
 
-    return () => {
-      clearTimeout(timer)
-      mediaQuery.removeEventListener('change', handleChange)
-      window.removeEventListener('load', () => setHasMounted(true))
+    if (document.readyState === 'complete') {
+      handleLoad()
+    } else {
+      window.addEventListener('load', handleLoad)
+      return () => window.removeEventListener('load', handleLoad)
     }
   }, [])
 
   return (
     <div className="fixed top-0 left-0 right-0 z-50 px-2">
       <motion.header
-        ref={headerRef}
-        initial={isReducedMotion ? false : { opacity: 0, y: -30 }}
-        animate={hasMounted || isReducedMotion ? { opacity: 1, y: 0 } : { opacity: 0, y: -30 }}
+        initial={false}
+        animate={isVisible ? { opacity: 1, y: 0 } : { opacity: 0, y: -40 }}
         transition={{
-          duration: 0.7,
-          ease: 'easeOut',
+          duration: 0.6,
+          ease: [0.16, 1, 0.3, 1], // Custom cubic bezier for smooth finish
         }}
         className="
           bg-[#000006]
@@ -64,25 +58,15 @@ function Header() {
           shadow-[0_5px_30px_#00bbf0]
           backdrop-blur-md
           border border-transparent
-          origin-top
+          will-change-transform
         "
         style={{
-          // Force GPU acceleration with a more reliable method
+          // Forcing GPU acceleration
           transform: 'translateZ(0)',
           backfaceVisibility: 'hidden',
-          perspective: '1000px',
         }}
       >
-        <motion.div
-          initial={isReducedMotion ? false : { scale: 0.9 }}
-          animate={hasMounted || isReducedMotion ? { scale: 1 } : { scale: 0.9 }}
-          transition={{
-            duration: 0.5,
-            delay: 0.1,
-            ease: 'easeOut',
-          }}
-          className="flex w-full items-center px-0 xl:px-9"
-        >
+        <div className="flex w-full items-center px-0 xl:px-9">
           <Link href="/" className="block">
             <motion.div
               className="relative sm:w-20 sm:h-20 w-16 h-16 ml-0 sm:ml-3"
@@ -126,7 +110,7 @@ function Header() {
               ))}
             </div>
           </div>
-        </motion.div>
+        </div>
       </motion.header>
     </div>
   )
