@@ -107,7 +107,7 @@ function Header() {
                           href={social.link}
                           className="transition-colors duration-300 block"
                         >
-                          <div className="sm:text-[27px] text-[23px] hover:text-red-600">
+                          <div className="sm:text-[27px] text-white text-[23px] hover:text-red-600">
                             {social.icon}
                           </div>
                         </Link>
