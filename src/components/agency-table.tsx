@@ -10,6 +10,7 @@ import { SliderFilter } from './slider-filter'
 import LoadingSpinner from './loading-spinner'
 import { Agency, useAgencies } from '@/hooks/useFetchAgencies'
 import { useDebounce } from '@/hooks/useDebounce'
+import Link from 'next/link'
 
 interface PaginationMeta {
   currentPage: number
@@ -293,9 +294,12 @@ function AgencyTable() {
                             </div>
                           </td>
                           <td className="whitespace-nowrap flex items-center justify-center pt-5 pb-5 text-base">
-                            <button className="rounded-lg p-3 text-sm text-white font-quicksand font-[600] button-gradient-bg">
+                            <Link
+                              href="mailto:agency@trendinfluencegroup.com"
+                              className="rounded-lg p-3 text-sm text-white font-quicksand font-[600] button-gradient-bg"
+                            >
                               Contact With Us
-                            </button>
+                            </Link>
                           </td>
                         </tr>
                       ))}
