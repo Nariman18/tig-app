@@ -117,7 +117,7 @@ function AgencyTable() {
   return (
     <div className="mt-10 max-w-full overflow-x-auto pt-10 md:pl-16 md:pr-16 pl-8 pr-8 pb-10">
       <div className="inline-block min-w-full">
-        <div className="border border-black rounded-lg pt-5  dark:border-[#00bbf0]">
+        <div className="border rounded-lg pt-5 border-[#00bbf0]">
           <div className="px-4 md:px-8 mb-4">
             <div className="flex flex-col lg:flex-row gap-4 items-start lg:items-center">
               {/* Filter Controls */}
@@ -153,7 +153,7 @@ function AgencyTable() {
             <div className="overflow-x-auto">
               <div className="min-w-[1600px] xl:min-w-0">
                 <div className="inline-block min-w-full sm:px-6 lg:px-8">
-                  <table className="min-w-full divide-y divide-gray-600 dark:divide-gray-600">
+                  <table className="min-w-full divide-y divide-gray-600 ">
                     <thead>
                       <tr className="grid grid-cols-7 gap-x-10">
                         <th
@@ -200,7 +200,7 @@ function AgencyTable() {
                         </th>
                       </tr>
                     </thead>
-                    <tbody className="divide-y divide-gray-600 dark:divide-gray-700">
+                    <tbody className="divide-y divide-gray-600">
                       {agencies.map((agency: Agency) => (
                         <tr key={agency.id} className="grid grid-cols-7 gap-x-10">
                           <td className="whitespace-nowrap pt-5 pb-5 flex items-center justify-center text-[17px] font-quicksand font-[500]">
@@ -295,7 +295,7 @@ function AgencyTable() {
                           </td>
                           <td className="whitespace-nowrap flex items-center justify-center pt-5 pb-5 text-base">
                             <Link
-                              href="mailto:agency@trendinfluencegroup.com"
+                              href="https://t.me/TrendInfluenceGroup"
                               className="rounded-lg p-3 text-sm text-white font-quicksand font-[600] button-gradient-bg"
                             >
                               Contact With Us
