@@ -8,7 +8,11 @@ import { useLayoutEffect, useRef, useState } from 'react'
 
 const socials = [
   { id: 1, link: '', icon: <RiInstagramFill /> },
-  { id: 2, link: 'mailto:agency@trendinfluencegroup.com', icon: <RiMailFill /> },
+  {
+    id: 2,
+    link: 'mailto:agency@trendinfluencegroup.com?subject=Contact%20Request&body=Hello%20TrendInfluence%20Team,',
+    icon: <RiMailFill />,
+  },
   { id: 3, link: '', icon: <RiWhatsappFill /> },
   { id: 4, link: 'https://t.me/TrendInfluenceGroup', icon: <RiTelegramFill /> },
 ]
@@ -97,7 +101,12 @@ function Header() {
                         whileTap={{ scale: 0.95 }}
                         transition={{ duration: 0.2, type: 'spring', stiffness: 400, damping: 17 }}
                       >
-                        <Link href={social.link} className="transition-colors duration-300 block">
+                        <Link
+                          rel={social.link.startsWith('http') ? 'noopener noreferrer' : ''}
+                          target={social.link.startsWith('http') ? '_blank' : '_self'}
+                          href={social.link}
+                          className="transition-colors duration-300 block"
+                        >
                           <div className="sm:text-[27px] text-[23px] hover:text-red-600">
                             {social.icon}
                           </div>
