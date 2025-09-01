@@ -9,6 +9,7 @@ import Pagination from './pagination'
 import { SliderFilter } from './slider-filter'
 import LoadingSpinner from './loading-spinner'
 import { Agency, useAgencies } from '@/hooks/useFetchAgencies'
+import { useDebounce } from '@/hooks/useDebounce'
 
 interface PaginationMeta {
   currentPage: number
@@ -24,6 +25,12 @@ function AgencyTable() {
   const [minFollowers, setMinFollowers] = useState<number | undefined>()
   const [maxFollowers, setMaxFollowers] = useState<number | undefined>()
 
+  // Data debouncing
+  const debouncedCountryFilter = useDebounce(countryFilter, 300)
+  const debouncedSocialMediaFilter = useDebounce(socialMediaFilter, 300)
+  const debouncedMinFollowers = useDebounce(minFollowers, 300)
+  const debouncedMaxFollowers = useDebounce(maxFollowers, 300)
+
   // Fetching all filtering data
   const { data: filterData } = useFilterOptions()
 
@@ -37,11 +44,11 @@ function AgencyTable() {
     isError,
   } = useAgencies({
     page: currentPage,
-    limit: 50,
-    countryFilter: countryFilter || undefined,
-    socialMediaFilter: socialMediaFilter || undefined,
-    minFollowers,
-    maxFollowers,
+    limit: 20,
+    countryFilter: debouncedCountryFilter || undefined,
+    socialMediaFilter: debouncedSocialMediaFilter || undefined,
+    minFollowers: debouncedMinFollowers,
+    maxFollowers: debouncedMaxFollowers,
   })
 
   const agencies = agencyData?.agencies || []
@@ -269,7 +276,7 @@ function AgencyTable() {
                                           alt={`Social media icon ${index + 1}`}
                                           fill
                                           className="object-contain"
-                                          priority
+                                          loading="lazy"
                                           onError={(e) => {
                                             e.currentTarget.style.display = 'none'
                                           }}

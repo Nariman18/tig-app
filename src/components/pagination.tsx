@@ -18,23 +18,23 @@ export default function Pagination({
   if (totalPages <= 1) return null
 
   return (
-    <div className="flex justify-center items-center gap-4 mt-8">
+    <div className="relative w-full flex justify-center items-center p-6 gap-4 mt-2">
       <button
         onClick={() => onPageChange(currentPage - 1)}
         disabled={!hasPrevPage}
-        className="px-4 py-2 bg-gray-200 rounded disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-300 transition-colors"
+        className="px-4 py-2 rounded-lg p-3 text-sm text-white font-quicksand font-[600] button-gradient-bg"
       >
         Previous
       </button>
 
-      <span className="text-sm">
+      <span className="text-base font-quicksand font-[600]">
         Page {currentPage} of {totalPages}
       </span>
 
       <button
         onClick={() => onPageChange(currentPage + 1)}
         disabled={!hasNextPage}
-        className="px-4 py-2 bg-gray-200 rounded disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-300 transition-colors"
+        className="px-4 py-2 rounded-lg p-3 text-sm text-white font-quicksand font-[600] button-gradient-bg disabled:cursor-not-allowed disabled:opacity-50"
       >
         Next
       </button>

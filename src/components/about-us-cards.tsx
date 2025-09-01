@@ -1,6 +1,6 @@
 import React from 'react'
 
-function Cards() {
+function AboutUsCards() {
   return (
     <section className="relative w-full pt-10 px-16">
       <h1 className="font-nataSans font-[500] text-[60px] border-b-[1px] pb-10 border-white">
@@ -12,4 +12,4 @@ function Cards() {
   )
 }
 
-export default Cards
+export default AboutUsCards

@@ -1,13 +1,13 @@
 import React from 'react'
 import Banner from './banner'
-import Cards from './cards'
+import AboutUsCards from './about-us-cards'
 
 function HomePage() {
   return (
     <div className="relative w-full">
       <Banner />
 
-      <Cards />
+      <AboutUsCards />
     </div>
   )
 }
