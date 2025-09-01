@@ -85,9 +85,9 @@ function Header() {
                       initial={{ opacity: 0, y: 10 }}
                       animate={{ opacity: 1, y: 0 }}
                       transition={{
-                        delay: index * 0.15, // Reduced delay
-                        duration: 0.25, // Slightly faster
-                        type: 'tween', // Changed to tween for smoother animation
+                        delay: index * 0.15,
+                        duration: 0.5,
+                        type: 'tween',
                         ease: 'easeOut',
                       }}
                       style={{ willChange: 'transform, opacity' }}
