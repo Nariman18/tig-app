@@ -7,7 +7,9 @@ function AboutUsCards() {
         About Us
       </h1>
 
-      <div className="grid-cols-1 md:grid-col-3 "></div>
+      <div className="relative grid-cols-1 md:grid-col-3 ">
+        <div></div>
+      </div>
     </section>
   )
 }

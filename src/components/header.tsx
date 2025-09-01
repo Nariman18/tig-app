@@ -7,11 +7,12 @@ import { motion } from 'framer-motion'
 import { useLayoutEffect, useRef, useState } from 'react'
 
 const socials = [
-  { id: 1, link: '', icon: <RiInstagramFill /> },
+  { id: 1, link: 'https://www.instagram.com/trend.influence.group_/', icon: <RiInstagramFill /> },
   {
     id: 2,
-    link: 'mailto:agency@trendinfluencegroup.com?subject=Contact%20Request&body=Hello%20TrendInfluence%20Team,',
+    link: 'agency@trendinfluencegroup.com',
     icon: <RiMailFill />,
+    isMail: true,
   },
   { id: 3, link: '', icon: <RiWhatsappFill /> },
   { id: 4, link: 'https://t.me/TrendInfluenceGroup', icon: <RiTelegramFill /> },
@@ -19,7 +20,7 @@ const socials = [
 
 function Header() {
   const [isLoaded, setIsLoaded] = useState(false)
-
+  const [copiedId, setCopiedId] = useState<number | null>(null)
   const headerRef = useRef<HTMLDivElement>(null)
 
   useLayoutEffect(() => {
@@ -31,6 +32,16 @@ function Header() {
 
     setIsLoaded(true)
   }, [])
+
+  const handleCopyEmail = async (email: string, id: number) => {
+    try {
+      await navigator.clipboard.writeText(email)
+      setCopiedId(id)
+      setTimeout(() => setCopiedId(null), 2000)
+    } catch (err) {
+      console.error('Failed to copy:', err)
+    }
+  }
 
   return (
     <div className="absolute top-0 left-0 right-0 z-50 px-2">
@@ -94,16 +105,32 @@ function Header() {
                         whileTap={{ scale: 0.95 }}
                         transition={{ duration: 0.2, type: 'spring', stiffness: 400, damping: 17 }}
                       >
-                        <Link
-                          rel={social.link.startsWith('http') ? 'noopener noreferrer' : ''}
-                          target={social.link.startsWith('http') ? '_blank' : '_self'}
-                          href={social.link}
-                          className="transition-colors duration-300 block"
-                        >
-                          <div className="sm:text-[27px] text-white text-[23px] hover:text-red-600">
-                            {social.icon}
-                          </div>
-                        </Link>
+                        {social.isMail ? (
+                          <button
+                            onClick={() => handleCopyEmail(social.link, social.id)}
+                            className="transition-colors duration-300 block text-white"
+                          >
+                            <div className="sm:text-[27px] text-[23px] hover:text-red-600">
+                              {social.icon}
+                            </div>
+                            {copiedId === social.id && (
+                              <div className="absolute -top-7 left-1/2 -translate-x-1/2 text-xs bg-gray-800 text-white px-2 py-1 rounded-md shadow-md">
+                                Copied
+                              </div>
+                            )}
+                          </button>
+                        ) : (
+                          <Link
+                            rel={social.link.startsWith('http') ? 'noopener noreferrer' : ''}
+                            target={social.link.startsWith('http') ? '_blank' : '_self'}
+                            href={social.link}
+                            className="transition-colors duration-300 block"
+                          >
+                            <div className="sm:text-[27px] text-[23px] text-white hover:text-red-600">
+                              {social.icon}
+                            </div>
+                          </Link>
+                        )}
                       </motion.div>
                     </motion.div>
                   ))}
