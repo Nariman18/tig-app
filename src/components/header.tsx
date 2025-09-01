@@ -61,17 +61,10 @@ function Header() {
                 }}
               >
                 <Image
-                  src="/IMG_3358.png"
-                  alt="Logo"
-                  fill
-                  className="md:object-contain object-cover dark:hidden"
-                  sizes="(max-width: 768px) 64px, 80px"
-                />
-                <Image
                   src="/IMG_3359.png"
                   alt="Logo"
                   fill
-                  className="md:object-contain object-cover hidden dark:block"
+                  className="md:object-contain object-cover block"
                   priority
                   sizes="(max-width: 768px) 64px, 80px"
                 />
