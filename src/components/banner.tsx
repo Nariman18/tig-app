@@ -5,8 +5,13 @@ function Banner() {
   return (
     <section className="relative w-full sm:mt-28 mt-24">
       <div className="grid grid-cols-1 md:grid-cols-2 max-w-full px-2">
-        <div className="relative w-full md:w-[48vw] h-[60vw] ipad-pro-portrait:h-[54.5vw] ipad-pro-landscape:h-[52.2vw] md:h-[63.8vw] lg:h-[54.5vw] ipad-air-landscape:h-[51.2vw] ipad-air-portrait:h-[56.1vw] xl:h-[50vw]">
-          <Image src="/IMG_3357.jpeg" alt="laptop" fill className="object-cover rounded-xl" />
+        <div className="relative mt-2 w-full md:w-[48vw] h-[60vw] ipad-pro-portrait:h-[53.5vw] ipad-pro-landscape:h-[52.2vw] md:h-[63.8vw] lg:h-[54.5vw] ipad-air-landscape:h-[51.2vw] ipad-air-portrait:h-[56.1vw] xl:h-[49.5vw]">
+          <Image
+            src="/IMG_6642.png"
+            alt="laptop"
+            fill
+            className="object-cover object-[28%] rounded-xl"
+          />
         </div>
 
         <div className="flex flex-col h-full bg-black space-y-9">
