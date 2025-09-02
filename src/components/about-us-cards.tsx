@@ -15,13 +15,13 @@ const cards = [
     id: 2,
     src: '/IMG_3362.jpeg',
     alt: 'card-2',
-    text: 'The internet is a huge platform where competition between brands is growing every day. To stand out and attract customers, you need effective promotion strategies. TIG (Trend Influence Group) helps companies promote their products and services through influencers. Thanks to their audience and trust, you can increase your brand awareness and sales. We will select the best partners and organize successful campaigns for your brand. We work with any niche and promote any product.',
+    text: 'The internet is a huge platform where competition between brands is growing every day. To stand out and attract customers, you need effective promotion strategies. TIG (Trend Influence Group) helps companies promote their products and services through influencers. Thanks to their audience and trust, you can increase your brand awareness and sales. We will select the best partners and organize successful campaigns for your brand. We collaborate across diverse niches and promote a variety of products.',
   },
   {
     id: 3,
     src: '/IMG_6641.PNG',
     alt: 'card-3',
-    text: 'More than 50 influencers publish advertising integrations every day from 40+ countries, 1000+ influencers already work with us. TIG (Trend Influence Group) helps brands promote any products and services through influencers. We select partners, develop strategies, and launch campaigns that increase brand awareness and sales worldwide.',
+    text: 'More than 50 influencers publish advertising integrations every day across 40+ countries, and over 1,000 influencers are already working with us. TIG (Trend Influence Group) helps brands promote any products and services through influencers. We select partners, develop strategies, and launch campaigns that increase brand awareness and sales worldwide.',
   },
 ]
 

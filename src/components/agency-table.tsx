@@ -298,7 +298,7 @@ function AgencyTable() {
                               href="https://t.me/TrendInfluenceGroup"
                               className="rounded-lg p-3 text-sm text-white font-quicksand font-[600] button-gradient-bg"
                             >
-                              Contact With Us
+                              Contact Us
                             </Link>
                           </td>
                         </tr>
