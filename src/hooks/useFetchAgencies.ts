@@ -5,7 +5,6 @@ export interface Agency {
   id: string
   displayNumber: number
   displayId: number
-  fullname: string
   nickname: string
   followers: number
   country: string

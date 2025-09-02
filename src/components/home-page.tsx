@@ -1,6 +1,7 @@
 import React from 'react'
 import Banner from './banner'
 import AboutUsCards from './about-us-cards'
+import AboutOurAgency from './about-our-agency'
 
 function HomePage() {
   return (
@@ -8,6 +9,8 @@ function HomePage() {
       <Banner />
 
       <AboutUsCards />
+
+      <AboutOurAgency />
     </div>
   )
 }

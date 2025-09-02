@@ -16,11 +16,6 @@ export const AgencyBase: CollectionConfig = {
 
   fields: [
     {
-      name: 'fullname',
-      type: 'text',
-      required: true,
-    },
-    {
       name: 'nickname',
       type: 'text',
       required: true,

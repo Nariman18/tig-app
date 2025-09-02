@@ -15,7 +15,7 @@ export async function GET(request: Request) {
 
     const query: any = {
       collection: 'AgencyBase',
-      sort: 'createdAt',
+      sort: '-followers',
       depth: 1,
       page,
       limit,
@@ -46,19 +46,21 @@ export async function GET(request: Request) {
       })
     }
 
-    // Add follower count filtering (now numeric)
+    // Adding follower count filtering
     if (minFollowers || maxFollowers) {
       const followersCondition: any = {}
 
-      if (minFollowers) {
-        followersCondition.greater_than_equal = parseInt(minFollowers)
+      if (minFollowers && !isNaN(Number(minFollowers))) {
+        followersCondition.greater_than_equal = Number(minFollowers)
       }
 
-      if (maxFollowers) {
-        followersCondition.less_than_equal = parseInt(maxFollowers)
+      if (maxFollowers && !isNaN(Number(maxFollowers))) {
+        followersCondition.less_than_equal = Number(maxFollowers)
       }
 
-      whereConditions.push({ followers: followersCondition })
+      if (Object.keys(followersCondition).length > 0) {
+        whereConditions.push({ followers: followersCondition })
+      }
     }
 
     if (whereConditions.length > 0) {
@@ -76,7 +78,7 @@ export async function GET(request: Request) {
     const docs = result.docs.map((a: any, index: number) => {
       const avatar = a.avatar
       let imageUrl = ''
-      let imageAlt = a?.fullname || 'avatar'
+      let imageAlt = a?.nickname || 'avatar'
 
       if (avatar && typeof avatar === 'object') {
         imageUrl = avatar?.sizes?.avatar?.url || avatar?.url || ''
@@ -95,7 +97,6 @@ export async function GET(request: Request) {
         id: a.id,
         displayNumber: startNumber + index,
         displayId: a.displayId,
-        fullname: a.fullname,
         nickname: a.nickname,
         followers: a.followers, // This is now a number
         country: a.country,

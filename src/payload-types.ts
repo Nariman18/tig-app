@@ -146,7 +146,6 @@ export interface User {
  */
 export interface AgencyBase {
   id: number;
-  fullname: string;
   nickname: string;
   followers: number;
   countryFlags:
@@ -536,7 +535,6 @@ export interface UsersSelect<T extends boolean = true> {
  * via the `definition` "AgencyBase_select".
  */
 export interface AgencyBaseSelect<T extends boolean = true> {
-  fullname?: T;
   nickname?: T;
   followers?: T;
   countryFlags?: T;

@@ -115,7 +115,7 @@ function AgencyTable() {
     )
 
   return (
-    <div className="mt-10 max-w-full overflow-x-auto pt-10 md:pl-16 md:pr-16 pl-8 pr-8 pb-10">
+    <div className="mt-10 max-w-full overflow-x-auto pt-10 md:pl-16 md:pr-16 pl-8 pr-8 pb-20">
       <div className="inline-block min-w-full">
         <div className="border rounded-lg pt-5 border-[#00bbf0]">
           <div className="px-4 md:px-8 mb-4">
@@ -155,18 +155,12 @@ function AgencyTable() {
                 <div className="inline-block min-w-full sm:px-6 lg:px-8">
                   <table className="min-w-full divide-y divide-gray-600 ">
                     <thead>
-                      <tr className="grid grid-cols-7 gap-x-10">
+                      <tr className="grid grid-cols-6 gap-x-10">
                         <th
                           scope="col"
                           className="py-3.5 text-center text-xl font-dmSerif font-thin"
                         >
                           #
-                        </th>
-                        <th
-                          scope="col"
-                          className="py-3.5 text-center text-xl font-dmSerif font-thin"
-                        >
-                          Full Name
                         </th>
                         <th
                           scope="col"
@@ -202,11 +196,11 @@ function AgencyTable() {
                     </thead>
                     <tbody className="divide-y divide-gray-600">
                       {agencies.map((agency: Agency) => (
-                        <tr key={agency.id} className="grid grid-cols-7 gap-x-10">
-                          <td className="whitespace-nowrap pt-5 pb-5 flex items-center justify-center text-[17px] font-quicksand font-[500]">
-                            {agency.displayNumber}
-                          </td>
-                          <td className="relative pt-5 pb-5 space-x-3 flex items-center">
+                        <tr key={agency.id} className="grid grid-cols-6 gap-x-10">
+                          <td className="relative pt-5 pb-5 space-x-5 flex items-center justify-center">
+                            <h1 className="whitespace-nowrap pt-5 pb-5 text-[17px] md:text-[19px] font-quicksand font-[500]">
+                              {agency.displayNumber}
+                            </h1>
                             <div className="relative w-16 h-16 min-w-[64px] min-h-[64px]">
                               {agency.image ? (
                                 <Image
@@ -222,9 +216,6 @@ function AgencyTable() {
                                 </div>
                               )}
                             </div>
-                            <p className="text-[17px] flex items-center font-quicksand font-[600]">
-                              {agency.fullname}
-                            </p>
                           </td>
 
                           <td className="whitespace-nowrap pt-5 pb-5 text-[17px] flex items-center justify-center font-quicksand font-[600]">

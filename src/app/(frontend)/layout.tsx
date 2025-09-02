@@ -2,8 +2,10 @@ import React from 'react'
 import '../global.css'
 import { ThemeProvider } from '@/components/ThemeProvider'
 import Header from '@/components/header'
+
+import Footer from '@/components/footer'
 import { QueryClientProvider } from '@tanstack/react-query'
-import { queryClient } from '@/lib/queryClient'
+import { queryClient } from '@/providers/queryClient'
 
 export const metadata = {
   description:
@@ -18,13 +20,14 @@ export default async function RootLayout(props: { children: React.ReactNode }) {
   const { children } = props
 
   return (
-    <html lang="en" suppressHydrationWarning>
+    <html lang="en" suppressHydrationWarning data-scroll-behavior="smooth">
       <body>
         <main>
           <ThemeProvider>
             {' '}
             <Header />
             <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>
+            <Footer />
           </ThemeProvider>
         </main>
       </body>
