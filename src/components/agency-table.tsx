@@ -115,7 +115,7 @@ function AgencyTable() {
     )
 
   return (
-    <div className="mt-10 max-w-full overflow-x-auto pt-10 md:pl-16 md:pr-16 pl-8 pr-8 pb-20">
+    <div className="max-w-full overflow-x-auto  md:px-16 px-8 py-20">
       <div className="inline-block min-w-full">
         <div className="border rounded-lg pt-5 border-[#00bbf0]">
           <div className="px-4 md:px-8 mb-4">
