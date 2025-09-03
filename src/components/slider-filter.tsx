@@ -77,7 +77,7 @@ export function SliderFilter({
   return (
     <div className={`w-64 ${className}`}>
       <div className="mb-2">
-        <label className="text-sm font-medium text-gray-700 dark:text-gray-300">
+        <label className="text-sm font-medium font-quicksand text-white">
           Followers Range - {formatFollowerCount(displayMin)}
         </label>
       </div>

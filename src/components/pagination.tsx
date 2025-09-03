@@ -27,7 +27,7 @@ export default function Pagination({
         Previous
       </button>
 
-      <span className="text-base font-quicksand font-[600]">
+      <span className="text-base text-white font-quicksand font-[600]">
         Page {currentPage} of {totalPages}
       </span>
 
