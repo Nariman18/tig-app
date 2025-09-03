@@ -155,48 +155,30 @@ function AgencyTable() {
                 <div className="inline-block min-w-full sm:px-6 lg:px-8">
                   <table className="min-w-full divide-y divide-gray-600 ">
                     <thead>
-                      <tr className="grid grid-cols-6 gap-x-10">
-                        <th
-                          scope="col"
-                          className="py-3.5 text-center text-xl font-dmSerif font-thin"
-                        >
+                      <tr className="grid grid-cols-6 gap-x-10 text-white text-center text-xl font-dmSerif font-thin">
+                        <th scope="col" className="py-3.5">
                           #
                         </th>
-                        <th
-                          scope="col"
-                          className="py-3.5 text-center text-xl font-dmSerif font-thin"
-                        >
+                        <th scope="col" className="py-3.5">
                           Nickname
                         </th>
-                        <th
-                          scope="col"
-                          className="py-3.5 text-center text-xl font-dmSerif font-thin"
-                        >
+                        <th scope="col" className="py-3.5">
                           Followers
                         </th>
-                        <th
-                          scope="col"
-                          className="py-3.5 text-center text-xl font-dmSerif font-thin"
-                        >
+                        <th scope="col" className="py-3.5">
                           Country
                         </th>
-                        <th
-                          scope="col"
-                          className="py-3.5 text-center text-xl font-dmSerif font-thin"
-                        >
+                        <th scope="col" className="py-3.5">
                           Socials
                         </th>
-                        <th
-                          scope="col"
-                          className="py-3.5 text-center text-xl font-dmSerif font-thin"
-                        >
+                        <th scope="col" className="py-3.5">
                           Contact
                         </th>
                       </tr>
                     </thead>
                     <tbody className="divide-y divide-gray-600">
                       {agencies.map((agency: Agency) => (
-                        <tr key={agency.id} className="grid grid-cols-6 gap-x-10">
+                        <tr key={agency.id} className="grid grid-cols-6 gap-x-10 text-white">
                           <td className="relative pt-5 pb-5 space-x-5 flex items-center justify-center">
                             <h1 className="whitespace-nowrap pt-5 pb-5 text-[17px] md:text-[19px] font-quicksand font-[500]">
                               {agency.displayNumber}
