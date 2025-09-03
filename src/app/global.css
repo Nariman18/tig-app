@@ -77,14 +77,20 @@ html {
 
 @layer base {
   body {
-    background-color: var(--background);
+    background-color: black;
   }
 
   /* global.css */
   .button-gradient-bg {
-    @apply bg-[linear-gradient(0deg,#40e0d0,#013d81)] transition delay-[110] duration-300 ease-in-out hover:-translate-y-1 hover:scale-110;
+    @apply hover:-translate-y-1 hover:scale-110 transition delay-[110] duration-300 ease-in-out;
     transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
     box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+    background: linear-gradient(0deg, #013d81, #4ecdc4);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+  }
+
+  .button-gradient-bg:hover {
+    box-shadow: 0 6px 15px #00bbf0;
   }
 
   .button-gradient-bg:disabled {
@@ -100,22 +106,6 @@ html {
     transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
   }
 
-  .social-button-animation {
-    @apply transition delay-[110] duration-300 ease-in-out hover:-translate-y-1 hover:scale-110;
-    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-  }
-
-  .dark .button-gradient-bg {
-    background: linear-gradient(0deg, #013d81, #4ecdc4);
-    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
-  }
-
-  .dark .button-gradient-bg:hover {
-    box-shadow: 0 6px 15px #00bbf0;
-  }
-  .button-gradient-bg:hover {
-    box-shadow: 0 6px 15px #26262699;
-  }
   .header-3d {
     transform: perspective(1000px) rotateX(5deg) scale(1.02);
     box-shadow:
@@ -140,11 +130,4 @@ html {
       0 0 32px #00bbf0,
       0 0 64px #00bbf0;
   }
-}
-
-.highlight-word {
-  background: rgba(234, 179, 8, 0.2);
-  padding: 0 2px;
-  border-radius: 3px;
-  box-decoration-break: clone; /* Ensuring continuity across lines */
 }
