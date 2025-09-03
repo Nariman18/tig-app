@@ -42,8 +42,8 @@ export function FilteringPanel({
   }
 
   // Default texts based on filterType
-  const defaultButtonText = `Filter by ${filterType === 'country' ? 'Country' : 'Social Media'}`
-  const defaultPlaceholder = `Search ${filterType === 'country' ? 'Countries' : 'Social Media'}...`
+  const defaultButtonText = `Filter by ${filterType === 'country' ? 'country' : 'social media'}`
+  const defaultPlaceholder = `Search ${filterType === 'country' ? 'countries' : 'social media'}...`
   const defaultEmptyText = `No ${filterType === 'country' ? 'Countries' : 'Social Media'} found.`
 
   const selectedLabel = currentFilter
