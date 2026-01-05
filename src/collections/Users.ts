@@ -40,7 +40,10 @@ export const Users: CollectionConfig = {
       },
       // Only allowing admins to update the "role" field
       access: {
-        update: ({ req: { user } }: AccessArgs<any>) => (user as User)?.role === 'admin',
+        update: ({ req }) => {
+          const user = req.user as User | undefined
+          return user?.role === 'admin'
+        },
       },
     },
   ],
