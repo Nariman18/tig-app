@@ -1,4 +1,4 @@
-import type { CollectionConfig, AccessArgs, FieldAccess } from 'payload'
+import type { CollectionConfig, AccessArgs } from 'payload'
 
 const userRoles = ['admin', 'user'] as const
 export type UserRole = (typeof userRoles)[number]
